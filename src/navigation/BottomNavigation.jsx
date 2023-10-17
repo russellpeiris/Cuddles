@@ -7,6 +7,7 @@ import { colors, dimen, typography } from '../../theme';
 import { StyleSheet, View } from 'react-native';
 import { BackArrow } from '../components';
 import React from 'react';
+import DueDate from '../screens/DueDate';
 
 const Tab = createBottomTabNavigator();
 const BottomNavigation = () => {
@@ -67,6 +68,13 @@ const BottomNavigation = () => {
       />
       <Tab.Screen name="DailyInsights" component={DailyInsights} options={({navigation, route})=> ({
         title: 'Daily Insights',
+        headerShown: true,
+        tabBarItemStyle: {display: 'none'},
+        tabBarStyle: {display: 'none'},
+        headerLeft: () => <BackArrow />,
+      })} />
+     <Tab.Screen name="DueDate" component={DueDate} options={({navigation, route})=> ({
+        title: 'Due date',
         headerShown: true,
         tabBarItemStyle: {display: 'none'},
         tabBarStyle: {display: 'none'},
