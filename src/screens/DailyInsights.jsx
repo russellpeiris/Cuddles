@@ -18,14 +18,22 @@ const DailyInsights = () => {
   const [moodValue, setMoodValue] = useState(null);
   const [moods, setMoods] = useState([
     { label: 'Happy', value: 'happy' },
-    { label: 'Sad', value: 'sad' },
+    { label: 'Calm', value: 'calm' },
+    { label: 'Anxious', value: 'anxious' },
+    { label: 'Confused', value: 'confused' },
+    { label: 'Mood Swings', value: 'moodSwings' },
+    { label: 'Depressed', value: 'depressed' },
   ]);
   const buttonList = [
-    { label: 'Button 1', value: '1' },
-    { label: 'Button 2', value: '2' },
-    { label: 'Button 3', value: '3' },
-    { label: 'Custom Button', value: '4' },
-  ];
+    { label: 'Braxton Hicks Contractions', value: 'braxtonHicksContractions' },
+    { label: 'Swelling', value: 'swelling' },
+    { label: 'Morning Sickness', value: 'morningSickness' },
+    { label: 'Heartburn', value: 'heartburn' },
+    { label: 'Backache', value: 'backache' },
+    { label: 'Frequent Urination', value: 'frequentUrination' },
+    { label: 'Round Ligament Pain', value: 'roundLigamentPain' },
+];
+
   useEffect(() => {
     setMoodValue(dailyInsight.mood);
   }, [dailyInsight.mood]);
@@ -60,9 +68,7 @@ const DailyInsights = () => {
             />
           </View>
           <View>
-            <IncrementDecrement 
-            
-            label="Baby kick count" />
+            <IncrementDecrement label="Baby kick count" />
           </View>
           <View>
             <Text style={{ fontFamily: typography.semiBold, fontSize: typography.default }}>
