@@ -23,9 +23,9 @@ const Menu = () => {
         <ScrollView style={{ padding: 16 }}>
           <MenuButtons text="Profile" icon="user" />
           <View style={styles.buttonGap} /> 
-          <MenuButtons text="Milestones" icon="bookmark" /> 
+          <MenuButtons text="Milestones" icon="bookmark" onPress={() => navigation.navigate('Milestones')} /> 
           <View style={styles.buttonGap} />
-          <MenuButtons text="Weekly Development" icon="leaf"  />
+          <MenuButtons text="Weekly Development" icon="leaf" onPress={() => navigation.navigate('WeeklyGrowth')}  />
           <View style={styles.buttonGap} /> 
           <MenuButtons text="Due Date Calculator" icon="calendar" onPress={() => navigation.navigate('DueDate')}/> 
           <View style={styles.buttonGap} />

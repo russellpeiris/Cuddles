@@ -1,5 +1,5 @@
 import { MenuIcon, HomeIcon, AvatarIcon, DoctorIcon } from '../assets/icons';
-import { DailyInsights, Doctors, Home, Menu, UserProfile } from '../screens';
+import { DailyInsights, Doctors, Home, Menu, Milestone1, Milestones, UserProfile, WeeklyGrowth } from '../screens';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { BottomTabBar } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
@@ -80,7 +80,29 @@ const BottomNavigation = () => {
         tabBarStyle: {display: 'none'},
         headerLeft: () => <BackArrow />,
       })} />
+     <Tab.Screen name="Milestones" component={Milestones} options={({navigation, route})=> ({
+        title: 'Milestones',
+        headerShown: true,
+        tabBarItemStyle: {display: 'none'},
+        tabBarStyle: {display: 'none'},
+        headerLeft: () => <BackArrow />,
+      })} />
+     <Tab.Screen name="WeeklyGrowth" component={WeeklyGrowth} options={({navigation, route})=> ({
+        title: 'Weekly Development',
+        headerShown: true,
+        tabBarItemStyle: {display: 'none'},
+        tabBarStyle: {display: 'none'},
+        headerLeft: () => <BackArrow />,
+      })} />
+      <Tab.Screen name="Milestone1" component={Milestone1} options={({navigation, route})=> ({
+        title: 'Milestone 01',
+        headerShown: true,
+        tabBarItemStyle: {display: 'none'},
+        tabBarStyle: {display: 'none'},
+        headerLeft: () => <BackArrow />,
+      })} />
     </Tab.Navigator>
+    
   );
 };
 
