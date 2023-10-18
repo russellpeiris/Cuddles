@@ -5,5 +5,6 @@ import Doctors from './Doctors';
 import Home from './Home';
 import Menu from './Menu';
 import DailyInsights from './DailyInsights';
+import DueDate from './DueDate';
 
-export { Home, SignUp, Login, UserProfile, Doctors, Menu, DailyInsights };
+export { Home, SignUp, Login, UserProfile, Doctors, Menu, DailyInsights , DueDate};

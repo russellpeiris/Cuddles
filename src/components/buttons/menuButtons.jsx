@@ -5,7 +5,7 @@ import { Button, Icon } from '@rneui/themed';
 import { colors, dimen, typography } from '../../../theme';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'; 
 
-export const MenuButtons = ({ text, onPress, width, height, icon, bgColor}) => {
+export const MenuButtons = ({ text, onPress, width, height, icon, bgColor, bdColour, txColor}) => {
   const buttonStyles = {
     backgroundColor:bgColor ? bgColor : colors.white,
     borderWidth: 1,
@@ -13,7 +13,7 @@ export const MenuButtons = ({ text, onPress, width, height, icon, bgColor}) => {
     width: width || '100%',
     height: height || 65,
     borderRadius: 8,
-    borderColor:colors.borderGray,
+    borderColor: bdColour? bdColour : colors.borderGray,
   };
 
   return (
