@@ -5,3 +5,12 @@ export * from './inputs/datePicker.jsx';
 export * from './buttons/backArrow.jsx';
 export * from './inputs/roundInputField.jsx'
 export * from './inputs/descInputField.jsx'
+export * from './dateSlider.jsx'
+export * from './articleCard.jsx'
+export * from './insightCard.jsx'
+export * from './inputs/dropDown.jsx'
+export * from './buttons/incrementDecrement.jsx'
+export * from './buttons/menuButtons.jsx'
+export * from './milestoneCard.jsx'
+export * from './milestoneDetail.jsx'
+export * from './inputs/checkBox.jsx'

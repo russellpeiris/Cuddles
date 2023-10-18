@@ -3,11 +3,13 @@ import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler
 import { PrimaryButton, InputField, Loader, DatePicker } from '../../components';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth, db, doc, setDoc } from '../../config/firebase';
+import { getErrorMessage } from '../../utils/errorMessages';
+import { colors, dimen, typography } from '../../../theme';
 import { useNavigation } from '@react-navigation/native';
+import { useLoader } from '../../context/LoaderContext';
 import { useEffect, useState } from 'react';
 import { Text } from '@rneui/themed';
-import { colors, typography } from '../../../theme';
-import { getErrorMessage } from '../../utils/errorMessages';
+import User from '../../models/User';
 
 const SignUp = () => {
   const [inputs, setInputs] = useState({
@@ -20,7 +22,7 @@ const SignUp = () => {
   });
   const [date, setDate] = useState(new Date());
   const [error, setError] = useState({ email: '', password: '' });
-  const [isLoading, setIsLoading] = useState(false);
+  const { isLoading, setIsLoading } = useLoader();
   const [isVisible, setIsVisible] = useState(false);
   const navigation = useNavigation();
 
@@ -90,28 +92,24 @@ const SignUp = () => {
     }
     setIsLoading(true);
     try {
-      // Step 1: Create the user in Firebase Authentication
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         inputs.email,
         inputs.password
       );
-      // Step 2: Store additional user data in Firestore
       const { user } = userCredential;
       const userDocRef = doc(db, 'users', user.uid);
 
-      const userData = {
-        firstName: inputs.firstName,
-        lastName: inputs.lastName,
-        email: inputs.email,
-        phoneNumber: inputs.phoneNumber,
-        dueDate: inputs.dueDate || '',
-      };
-      try {
-        const userDoc = await setDoc(userDocRef, userData);
-      } catch (error) {
-        console.log('error: ', error);
-      }
+      const newUser = new User(
+        inputs.firstName,
+        inputs.lastName,
+        inputs.email,
+        inputs.phoneNumber,
+        inputs.dueDate || ''
+      );
+      const userData = { ...newUser };
+
+      await setDoc(userDocRef, userData);
     } catch (error) {
       error && setIsLoading(false);
       const errorCode = error.code;
@@ -122,6 +120,8 @@ const SignUp = () => {
         email: errorMessages.email,
         password: errorMessages.password,
       }));
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -185,17 +185,16 @@ const SignUp = () => {
 
   return (
     <>
-      <Loader visible={isLoading} />
       <KeyboardAvoidingView style={styles.container} behavior="height">
         <GestureHandlerRootView>
-          <ScrollView style={{ padding: 16 }}>
+          <ScrollView style={{ padding: dimen.default }}>
             <View style={styles.inputContainer}>
               <View style={styles.titleContainer}>
                 <Text style={styles.title}>Register</Text>
                 <Text
                   style={{
                     fontFamily: typography.semiBold,
-                    fontSize: 18,
+                    fontSize: typography.authSubTitle,
                     marginTop: 10,
                     marginBottom: 30,
                   }}
@@ -292,6 +291,7 @@ const SignUp = () => {
                   fontFamily: typography.medium,
                   marginBottom: 20,
                   marginHorizontal: 3,
+                  fontSize: typography.default,
                 }}
               >
                 By setting up the account you agree to share your data with the Hospital
@@ -311,23 +311,22 @@ export default SignUp;
 
 const styles = StyleSheet.create({
   titleContainer: {
-    // marginTop: 20,
     width: '100%',
     backgroundColor: 'white',
-    // paddingLeft: 10
   },
   title: {
-    fontSize: 36,
+    fontSize: typography.authTitle,
     fontFamily: typography.bold,
-    backgroundColor: 'white',
+    backgroundColor: colors.white,
   },
   container: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    backgroundColor: 'white',
+    backgroundColor: colors.white,
     height: '100%',
     paddingHorizontal: 0,
+    paddingVertical: dimen.default,
   },
   inputContainer: {
     display: 'flex',
