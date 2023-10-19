@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { colors, typography } from '../../../theme';
 import React, { useState } from 'react';
+import { Input } from '@rneui/themed';
 import { Button } from '@rneui/base';
 
 export const IncrementDecrement = ({ label }) => {
@@ -23,11 +24,7 @@ export const IncrementDecrement = ({ label }) => {
   }
   return (
     <>
-      <Text
-        style={{ fontSize: typography.default, fontFamily: typography.medium, marginBottom: 12 }}
-      >
-        {label}
-      </Text>
+      <Text style={styles.label}>{label}</Text>
       <View style={styles.container}>
         <Button
           title="-"
@@ -35,9 +32,14 @@ export const IncrementDecrement = ({ label }) => {
           buttonStyle={styles.decrementButton}
           onPress={decrement}
         />
-        <View style={styles.count}>
-          <Text style={{ padding: 0, margin: 0 }}>{count}</Text>
-        </View>
+        <Input
+          editable={false}
+          placeholderTextColor='black'
+          containerStyle={styles.inputContainer}
+          inputContainerStyle={styles.countInputContainer}
+          style={styles.input}
+          placeholder={count.toString()}
+        />
         <Button
           title="+"
           titleStyle={styles.buttonText}
@@ -50,12 +52,17 @@ export const IncrementDecrement = ({ label }) => {
 };
 
 const styles = StyleSheet.create({
+  label: {
+    fontSize: typography.default,
+    fontFamily: typography.medium,
+    marginBottom: 12,
+  },
   container: {
     display: 'flex',
     flexDirection: 'row',
-    width: '50%',
+    width: '47%',
     alignItems: 'center',
-    marginBottom: 19
+    marginBottom: 19,
   },
   decrementButton: {
     width: 55,
@@ -81,16 +88,26 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingRight: 12,
   },
-  count: {
-    justifyContent: 'center',
-    alignItems: 'center',
+  inputContainer: {
+    paddingHorizontal: 0,
+    paddingVertical: 0,
+    marginVertical: 0,
+    height: 50,
+    width: '29%',
+  },
+  countInputContainer: {
     borderTopWidth: 1,
     borderBottomWidth: 1,
     margin: 0,
     padding: 0,
     height: 50,
-    width: 54,
     borderColor: colors.borderGray,
+  },
+  input: {
+    padding: 0,
+    margin: 0,
+    textAlign: 'center',
+    fontSize: typography.default,
   },
   buttonText: {
     fontSize: 16,

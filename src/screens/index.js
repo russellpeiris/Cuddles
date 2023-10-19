@@ -9,5 +9,7 @@ import DueDate from './DueDate';
 import Milestones from './milestones/Milestones';
 import WeeklyGrowth from './WeeklyGrowth';
 import Milestone1 from './milestones/Milestone1';
-
-export { Home, SignUp, Login, UserProfile, Doctors, Menu, DailyInsights , DueDate, Milestones, WeeklyGrowth, Milestone1};
+import Article from './Article';
+import Explore from './Explore';
+import ExploreArticle from './ExploreArticle';
+export { Home, SignUp, Login, UserProfile, Doctors, Menu, DailyInsights, Article, Explore, ExploreArticle , DueDate, Milestones, WeeklyGrowth, Milestone1};

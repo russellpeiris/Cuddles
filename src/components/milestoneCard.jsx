@@ -2,6 +2,7 @@ import { colors, dimen, typography } from '../../theme';
 import { StyleSheet, Text, View } from 'react-native';
 import { he } from 'date-fns/locale';
 import React from 'react';
+import { FontAwesome } from '@expo/vector-icons';
 
 
 export const MilestoneCard = ({ title, content, duration }) => {
@@ -16,7 +17,8 @@ export const MilestoneCard = ({ title, content, duration }) => {
           {content}
         </Text>
       </View>
-      <View>
+      <View style={styles.durationContainer}>
+        <FontAwesome name="clock-o" size={16} color={colors.warningYellow} />
         <Text style={styles.duration}>
           {duration}
         </Text>
@@ -33,7 +35,7 @@ const styles = StyleSheet.create({
     borderColor: colors.borderGray,
     borderRadius: 10,
     padding: 24,
-    height: 163,
+    height: 173,
     marginBottom:dimen.default,
   },
   textContainer: {
@@ -51,8 +53,16 @@ const styles = StyleSheet.create({
   },
   duration:{
      textAlign:'right',
-     fontSize:typography.small,
+     fontSize: 13,
      color:colors.descriptionGray,
-     marginTop:7
-  }
+     fontFamily: typography.medium,
+    },
+    durationContainer: {
+      display:'flex',
+      flexDirection:'row',
+      justifyContent:'flex-end',
+      alignItems:'center',
+      gap:5,
+      paddingTop:5,
+    }
 });

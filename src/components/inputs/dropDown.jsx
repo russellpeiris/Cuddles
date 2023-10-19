@@ -22,10 +22,14 @@ export const DropDown = ({
       >
         {label}
       </Text>
+      <View style={{width: '47%'}}>
       <DropDownPicker
         style={styles.dropdown}
-        textStyle={{ fontSize: 12, fontFamily: typography.medium }}
+        textStyle={{ fontSize: 14, fontFamily: typography.medium, paddingLeft: dimen.default }}
+        listItemContainerStyle={{ }}
+        // listParentContainerStyle={{ backgroundColor: 'aqua', width: '47%'}}
         open={open}
+        dropDownContainerStyle={{ width: '100%', borderColor: colors.borderGray, borderWidth: 1 }}
         value={value}
         items={items}
         setOpen={setOpen}
@@ -37,14 +41,15 @@ export const DropDown = ({
         onChangeValue={onChangeValue}
         zIndex={3000}
         zIndexInverse={1000}
+        listMode='SCROLLVIEW'
       />
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   dropdown: {
-    width: '50%',
     borderColor: colors.borderGray,
     borderWidth: 1,
     borderRadius: 24,
