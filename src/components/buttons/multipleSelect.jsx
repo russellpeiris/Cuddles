@@ -27,7 +27,7 @@ const MultipleSelector = ({ buttonList }) => {
             <Text
               style={{
                 color: choice.includes(item.value) ? '#fff' : '#333',
-                fontSize: 14,
+                fontSize: 13,
               }}
             >
               {item.label}
