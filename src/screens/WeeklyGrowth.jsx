@@ -281,7 +281,6 @@ const styles = StyleSheet.create({
         height: '100%',
       },
       cardConatainer:{
-        margin: dimen.default,
         padding: dimen.default,
     },
     articleGap:{

@@ -11,9 +11,8 @@ const Milestones = () => {
 
   return (
     <>
-     <GestureHandlerRootView style={styles.container}>
-        <ScrollView>
-            <View style={styles.cardConatainer}>
+     <GestureHandlerRootView>
+        <ScrollView style={styles.container}>
                 <TouchableOpacity onPress={() => navigation.navigate('Milestone1')}>
                 <MilestoneCard
                      title="Milestone 1"
@@ -41,7 +40,6 @@ const Milestones = () => {
                      content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel libero nec nunc viverra posuere. Fusce euismod ex sit amet quam tincidunt, sed convallis eros varius. Proin euismod metus quis justo malesuada,Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel libero nec nunc viverra posuere. Fusce euismod ex sit amet quam tincidunt, sed convallis eros varius. Proin euismod metus quis justo malesuada, "
                      duration="week 36"
                 />
-            </View> 
         </ScrollView>
      </GestureHandlerRootView>
     </>
@@ -53,11 +51,8 @@ const styles = StyleSheet.create({
         display: 'flex',
         backgroundColor: 'white',
         height: '100%',
-      },
-      cardConatainer:{
-        margin: dimen.default,
         padding: dimen.default,
-    },
+      },
 })
 
 
