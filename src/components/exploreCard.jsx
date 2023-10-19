@@ -1,7 +1,8 @@
 import { View, Text, Image, StyleSheet } from 'react-native';
 import React from 'react';
+import { colors, typography } from '../../theme';
 
-const ExploreCard = ({ title, imageUrl }) => {
+export const ExploreCard = ({ title, imageUrl }) => {
   return (
     <View style={styles.cardContainer}>
       <Image source={{ uri: imageUrl }} style={styles.cardImage} />
@@ -16,13 +17,12 @@ const styles = StyleSheet.create({
   cardContainer: {
     height: 150,
     borderRadius: 15,
-    borderColor: '#bababa',
-    borderWidth: 0.1,
-    overflow: 'hidden', // Clip the content inside the rounded border
-    elevation:5
+    borderColor: colors.borderGray,
+    borderWidth: 1,
+    overflow: 'hidden', 
   },
   cardImage: {
-    height: '60%', // 60% of the card's height
+    height: '60%', 
     width: '100%',
   },
   cardTitleContainer: {
@@ -33,8 +33,7 @@ const styles = StyleSheet.create({
   },
   cardTitle: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontFamily: typography.semiBold
   },
 });
 
-export default ExploreCard;

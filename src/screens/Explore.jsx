@@ -1,20 +1,20 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
-import ExploreCard from '../components/exploreCard';
 import { colors } from '../../theme';
 import React from 'react';
+import { ExploreCard } from '../components';
 
 const Explore = () => {
 
     const navigation = useNavigation();
   const handleCard1Press = () => {
-    // Navigate to the 'Article 01' screen
     navigation.navigate('ExploreArticle');
   };
 
   return (
-    <View style={styles.container}>
+    <GestureHandlerRootView>
+      <ScrollView style={styles.container}>
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button}>
           <Text style={styles.buttonText}>Mental</Text>
@@ -26,7 +26,7 @@ const Explore = () => {
           <Text style={styles.buttonText}>Health</Text>
         </TouchableOpacity>
       </View>
-      <ScrollView style={styles.scrollContainer}>
+
         <TouchableOpacity style={styles.card} onPress={handleCard1Press}>
           <ExploreCard title="10 Common Pregnancy Worries" imageUrl="https://shorturl.at/eEHV7" />
         </TouchableOpacity>
@@ -52,17 +52,15 @@ const Explore = () => {
           />
         </TouchableOpacity>
       </ScrollView>
-    </View>
+    </GestureHandlerRootView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: 'white', // Set the background color to white
-  },
-  scrollContainer: {
-    margin: 20,
+    paddingHorizontal: 16,
+    height: '100%',
+    backgroundColor: 'white',
   },
   buttonContainer: {
     flexDirection: 'row',

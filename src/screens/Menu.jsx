@@ -1,12 +1,10 @@
 import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { PrimaryButton, MenuButtons } from '../components';
 import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, Text, View } from 'react-native';
 import { AlertIcon, CalculatorIcon, ExploreIcon, MilestoneIcon, ProfileIcon, SwitchIcon, WeeklyDevIcon } from '../assets/icons';
 import { colors, dimen } from '../../theme';
 import { auth } from '../config/firebase';
-import Explore from './Explore';
 import React from 'react';
 
 const Menu = () => {
@@ -19,11 +17,6 @@ const Menu = () => {
       })
       .catch((error) => alert(error.message));
   };
-
-   const handleExploreOnPress = () => {
-     // Navigate to the 'Explore' screen
-     navigation.navigate('Explore');
-   };
 
   return (
     <>
@@ -63,10 +56,10 @@ const Menu = () => {
           <MenuButtons
             text="Explore"
             icon={<ExploreIcon height={dimen.icon} width={dimen.icon} fill="black" />}
+            onPress={() => navigation.navigate('Explore')}
           />
           <View style={styles.buttonGap} />
           <PrimaryButton text="Logout" onPress={handleSignOut} />
-          <PrimaryButton text="Explore" style={styles.btnTemp} onPress={handleExploreOnPress}></PrimaryButton>
         </ScrollView>
       </GestureHandlerRootView>
     </>

@@ -1,11 +1,11 @@
 import { View, Text, Image, ScrollView, StyleSheet } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { GestureHandlerRootView, TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 
 const ExploreArticle = () => {
   return (
-    <View style={styles.container}>
+    <GestureHandlerRootView style={styles.container}>
       <Text style={styles.title}>10 Common Pregnancy Worries</Text>
 
       <Image source={{ uri: 'https://shorturl.at/eEHV7' }} style={styles.image} />
@@ -24,7 +24,7 @@ const ExploreArticle = () => {
       <TouchableOpacity style={styles.linkButton}>
         <Text style={styles.linkText}>Read More</Text>
       </TouchableOpacity>
-    </View>
+    </GestureHandlerRootView>
   );
 };
 
