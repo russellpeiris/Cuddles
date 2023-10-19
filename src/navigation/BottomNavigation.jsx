@@ -1,5 +1,5 @@
+import { DailyInsights, Doctors, ExploreArticle, Home, Menu, UserProfile} from '../screens';
 import { MenuIcon, HomeIcon, AvatarIcon, DoctorIcon } from '../assets/icons';
-import { DailyInsights, Doctors, Home, Menu, UserProfile } from '../screens';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { BottomTabBar } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
@@ -56,6 +56,7 @@ const BottomNavigation = () => {
           headerLeft: () => <BackArrow />,
         })}
       />
+
       <Tab.Screen
         name="Menu"
         component={Menu}
@@ -65,13 +66,29 @@ const BottomNavigation = () => {
           headerLeft: () => <BackArrow />,
         })}
       />
-      <Tab.Screen name="DailyInsights" component={DailyInsights} options={({navigation, route})=> ({
-        title: 'Daily Insights',
-        headerShown: true,
-        tabBarItemStyle: {display: 'none'},
-        tabBarStyle: {display: 'none'},
-        headerLeft: () => <BackArrow />,
-      })} />
+      <Tab.Screen
+        name="DailyInsights"
+        component={DailyInsights}
+        options={({ navigation, route }) => ({
+          title: 'Daily Insights',
+          headerShown: true,
+          tabBarItemStyle: { display: 'none' },
+          tabBarStyle: { display: 'none' },
+          headerLeft: () => <BackArrow />,
+        })}
+      />
+
+      <Tab.Screen
+        name="ExploreArticle"
+        component={ExploreArticle}
+        options={({ navigation, route }) => ({
+          title: 'Article',
+          headerShown: true,
+          tabBarItemStyle: { display: 'none' },
+          tabBarStyle: { display: 'none' },
+          headerLeft: () => <BackArrow />,
+        })}
+      />
     </Tab.Navigator>
   );
 };

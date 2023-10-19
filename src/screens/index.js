@@ -5,5 +5,7 @@ import Doctors from './Doctors';
 import Home from './Home';
 import Menu from './Menu';
 import DailyInsights from './DailyInsights';
-
-export { Home, SignUp, Login, UserProfile, Doctors, Menu, DailyInsights };
+import Article from './Article';
+import Explore from './Explore';
+import ExploreArticle from './ExploreArticle';
+export { Home, SignUp, Login, UserProfile, Doctors, Menu, DailyInsights, Article, Explore, ExploreArticle };
