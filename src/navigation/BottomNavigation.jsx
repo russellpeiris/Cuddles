@@ -1,5 +1,5 @@
 import { MenuIcon, HomeIcon, AvatarIcon, DoctorIcon } from '../assets/icons';
-import { DailyInsights, Doctors, Home, Menu, Milestone1, Milestones, UserProfile, WeeklyGrowth } from '../screens';
+import { DailyInsights, Doctors, Home, Menu, Milestone1, Milestones, UserProfile, WeeklyGrowth, ExploreArticle, Explore, Article } from '../screens';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { BottomTabBar } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
@@ -57,6 +57,7 @@ const BottomNavigation = () => {
           headerLeft: () => <BackArrow />,
         })}
       />
+
       <Tab.Screen
         name="Menu"
         component={Menu}
@@ -66,14 +67,18 @@ const BottomNavigation = () => {
           headerLeft: () => <BackArrow />,
         })}
       />
-      <Tab.Screen name="DailyInsights" component={DailyInsights} options={({navigation, route})=> ({
-        title: 'Daily Insights',
-        headerShown: true,
-        tabBarItemStyle: {display: 'none'},
-        tabBarStyle: {display: 'none'},
-        headerLeft: () => <BackArrow />,
-      })} />
-     <Tab.Screen name="DueDate" component={DueDate} options={({navigation, route})=> ({
+            <Tab.Screen
+        name="DailyInsights"
+        component={DailyInsights}
+        options={({ navigation, route }) => ({
+          title: 'Daily Insights',
+          headerShown: true,
+          tabBarItemStyle: { display: 'none' },
+          tabBarStyle: { display: 'none' },
+          headerLeft: () => <BackArrow />,
+        })}
+      />
+           <Tab.Screen name="DueDate" component={DueDate} options={({navigation, route})=> ({
         title: 'Due date',
         headerShown: true,
         tabBarItemStyle: {display: 'none'},
@@ -101,6 +106,43 @@ const BottomNavigation = () => {
         tabBarStyle: {display: 'none'},
         headerLeft: () => <BackArrow />,
       })} />
+
+      <Tab.Screen
+        name="ExploreArticle"
+        component={ExploreArticle}
+        options={({ navigation, route }) => ({
+          title: 'Article',
+          headerShown: true,
+          tabBarItemStyle: { display: 'none' },
+          tabBarStyle: { display: 'none' },
+          headerLeft: () => <BackArrow />,
+        })}
+      />
+
+      <Tab.Screen
+        name="Explore"
+        component={Explore}
+        options={({ navigation, route }) => ({
+          title: 'Explore',
+          headerShown: true,
+          tabBarItemStyle: { display: 'none' },
+          tabBarStyle: { display: 'none' },
+          headerLeft: () => <BackArrow />,
+        })}
+        />
+
+        <Tab.Screen
+        name="Article"
+        component={Article}
+        options={({ navigation, route }) => ({
+          title: 'Article',
+          headerShown: true,
+          tabBarItemStyle: { display: 'none' },
+          tabBarStyle: { display: 'none' },
+          headerLeft: () => <BackArrow />,
+        })}
+      />
+
     </Tab.Navigator>
     
   );

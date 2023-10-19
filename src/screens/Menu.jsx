@@ -1,5 +1,4 @@
 import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { PrimaryButton, MenuButtons } from '../components';
 import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, Text, View } from 'react-native';
@@ -18,6 +17,7 @@ const Menu = () => {
       })
       .catch((error) => alert(error.message));
   };
+
   return (
     <>
       <GestureHandlerRootView style={styles.container}>
@@ -56,6 +56,7 @@ const Menu = () => {
           <MenuButtons
             text="Explore"
             icon={<ExploreIcon height={dimen.icon} width={dimen.icon} fill="black" />}
+            onPress={() => navigation.navigate('Explore')}
           />
           <View style={styles.buttonGap} />
           <PrimaryButton text="Logout" onPress={handleSignOut} />

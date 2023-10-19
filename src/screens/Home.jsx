@@ -1,12 +1,12 @@
 import { GestureHandlerRootView, ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { ArticleCard, DateSlider, InputField, InsightCard } from '../components';
+import { AppointmentCard } from '../components/appointmentCard';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { colors, dimen, typography } from '../../theme';
 import { StyleSheet, Text, View } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import React from 'react';
-import { AppointmentCard } from '../components/appointmentCard';
 
 const Home = () => {
   const navigation = useNavigation();
@@ -15,48 +15,55 @@ const Home = () => {
     navigation.navigate('DailyInsights');
   };
 
+  const handleArticleCardPress = () => {
+    // Navigate to the 'Article' screen
+    navigation.navigate('Article');
+  };
+
   return (
     <SafeAreaView>
       <GestureHandlerRootView style={styles.container}>
         <ScrollView>
-          <View style= {{padding: 16}}>
-          <View>
-            <View style={styles.header}>
-              <Text style={styles.greeting}>Hello Samantha!</Text>
-              <FontAwesome5 name="bell" size={24} color="black" />
+          <View style={{ padding: 16 }}>
+            <View>
+              <View style={styles.header}>
+                <Text style={styles.greeting}>Hello Samantha!</Text>
+                <FontAwesome5 name="bell" size={24} color="black" />
+              </View>
+              <View></View>
+              <Text style={styles.weekText}>Week 1</Text>
             </View>
-            <View></View>
-            <Text style={styles.weekText}>Week 1</Text>
-          </View>
-          <DateSlider />
-          <View style={{ paddingTop: 16 }}>
-            <ArticleCard
-              title="title"
-              content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel libero nec nunc viverra posuere. Fusce euismod ex sit amet quam tincidunt, sed convallis eros varius. Proin euismod metus quis justo malesuada,Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel libero nec nunc viverra posuere. Fusce euismod ex sit amet quam tincidunt, sed convallis eros varius. Proin euismod metus quis justo malesuada,  "
-              imageUrl={'https://i.imgur.com/UYiroysl.jpg'}
-            />
-          </View>
-          <View style={styles.insightsContainer}>
-            <Text style={styles.subTop}>My Daily Insights</Text>
-            <View style={styles.insights}>
-              <TouchableOpacity onPress={handlePress}>
-              <InsightCard title={null} />
-              </TouchableOpacity>
-              <InsightCard title="Mood" value="happy" />
-              <InsightCard title="BMI" value="18.5" />
-              <InsightCard title="BP" value="110/68" />
+            <DateSlider />
+            <TouchableOpacity onPress={handleArticleCardPress}>
+              <View style={{ paddingTop: 16 }}>
+                <ArticleCard
+                  title="title"
+                  content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel libero nec nunc viverra posuere. Fusce euismod ex sit amet quam tincidunt, sed convallis eros varius. Proin euismod metus quis justo malesuada,Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel libero nec nunc viverra posuere. Fusce euismod ex sit amet quam tincidunt, sed convallis eros varius. Proin euismod metus quis justo malesuada,  "
+                  imageUrl={'https://i.imgur.com/UYiroysl.jpg'}
+                />
+              </View>
+            </TouchableOpacity>
+            <View style={styles.insightsContainer}>
+              <Text style={styles.subTop}>My Daily Insights</Text>
+              <View style={styles.insights}>
+                <TouchableOpacity onPress={handlePress}>
+                  <InsightCard title={null} />
+                </TouchableOpacity>
+                <InsightCard title="Mood" value="happy" />
+                <InsightCard title="BMI" value="18.5" />
+                <InsightCard title="BP" value="110/68" />
+              </View>
             </View>
-          </View>
-          <View>
-            <Text style={styles.subTop}>Upcoming Appointments</Text>
-            <View style={styles.appointments}>
-              <AppointmentCard/>
+            <View>
+              <Text style={styles.subTop}>Upcoming Appointments</Text>
+              <View style={styles.appointments}>
+                <AppointmentCard />
+              </View>
             </View>
-          </View>
           </View>
         </ScrollView>
       </GestureHandlerRootView>
-      </SafeAreaView>
+    </SafeAreaView>
   );
 };
 
@@ -100,5 +107,5 @@ const styles = StyleSheet.create({
   },
   appointments: {
     paddingTop: 16,
-  }
+  },
 });
