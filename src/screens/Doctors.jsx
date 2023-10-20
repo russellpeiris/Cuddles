@@ -1,7 +1,7 @@
 import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React from 'react';
 import { DoctorCard, RoundInputField } from '../components';
 const Doctors = () => {
@@ -14,6 +14,7 @@ const Doctors = () => {
            <RoundInputField
              placeholder='Search Doctor'
            />
+           <TouchableOpacity onPress={()=> navigation.navigate('ScheduleAppointment')}>
             <DoctorCard
               name="Ashynn Caizoni"
               speacialization="Consultant Gynecologist"
@@ -24,6 +25,7 @@ const Doctors = () => {
               status='online'
               fee='LKR 1500.00'
             />
+            </TouchableOpacity>
             <DoctorCard
               name="Ashynn Caizoni"
               speacialization="Consultant Gynecologist"
