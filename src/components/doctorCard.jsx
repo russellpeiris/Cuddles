@@ -2,8 +2,7 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native';
 import { colors, dimen, typography } from '../../theme';
 import { Image } from '@rneui/base';
-import { StarRatings } from './index';
-
+import { StarRatings } from './inputs/rating'
 export const DoctorCard = ({
     name,
     speacialization,
@@ -12,8 +11,9 @@ export const DoctorCard = ({
     endTime,
     fee,
     status,
-    rate
 }) => {
+  const [rating, setRating] = React.useState(0); // State for managing the rating
+
   return (
     <View style={styles.container}>
          <Image source={
@@ -31,9 +31,8 @@ export const DoctorCard = ({
     <View>
       <Text style={styles.content} >{speacialization}</Text>
     </View>
-    <StarRatings
-    rating={rate}
-    />
+    <StarRatings setRating={setRating} />
+
     <View>
         <Text style={styles.content}>{startTime}-{endTime}</Text>
     </View>

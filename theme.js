@@ -1,7 +1,7 @@
 // Colors
 export const colors = {
   white: '#FFFFFF',
-  black:'000000',
+  black:'#000000',
   primaryPink: '#9F678C',
   successGreen: '#1ED40E',
   warningYellow: '#EDBE17',
