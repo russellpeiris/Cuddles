@@ -5,7 +5,7 @@ import { BottomTabBar } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
 import { colors, dimen, typography } from '../../theme';
 import { StyleSheet, View } from 'react-native';
-import { BackArrow } from '../components';
+import { BackArrow, ScheduleAppointment } from '../components';
 import React from 'react';
 import DueDate from '../screens/DueDate';
 
@@ -145,6 +145,14 @@ const BottomNavigation = () => {
 
      <Tab.Screen name="Emergency" component={Emergency} options={({navigation, route})=> ({
         title: 'Emergency Trigger',
+        headerShown: true,
+        tabBarItemStyle: {display: 'none'},
+        tabBarStyle: {display: 'none'},
+        headerLeft: () => <BackArrow />,
+      })} />
+
+<Tab.Screen name="ScheduleAppointment" component={ScheduleAppointment} options={({navigation, route})=> ({
+        title: 'Schedule Appointment',
         headerShown: true,
         tabBarItemStyle: {display: 'none'},
         tabBarStyle: {display: 'none'},
