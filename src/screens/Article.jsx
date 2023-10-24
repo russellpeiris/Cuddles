@@ -1,16 +1,18 @@
 import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler';
 import { View, Text, Image, StyleSheet } from 'react-native';
 import React from 'react';
+import { article } from '../utils/weeklyArticles';
+
 
 const Article = () => {
   return (
     <GestureHandlerRootView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
-        <Image source={{ uri: 'https://shorturl.at/gopxZ' }} style={styles.image} />
-        <Text style={styles.title}>Article Title</Text>
+        <Image source={{ uri: article.ImageUrl}} style={styles.image} />
+        <Text style={styles.title}>{article.title}</Text>
         <Text style={styles.subtitle}>Author</Text>
         <Text style={styles.paragraph}>
-          This is the article content. You can replace this with the text.
+           {article.content}
         </Text>
       </ScrollView>
     </GestureHandlerRootView>
