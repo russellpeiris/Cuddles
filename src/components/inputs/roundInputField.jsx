@@ -27,10 +27,13 @@ export const RoundInputField = ({
   }
   return (
     <View style={container}>
-      <Text style={{ fontSize: typography.default, fontFamily: typography.medium, marginBottom: 12 }}>{label}</Text>
+      {
+        label && <Text style={{ fontFamily: typography.semiBold, fontSize: typography.default, marginBottom: 12 }}>{label}</Text>
+      }
       <Input
         inputStyle={styles.inputStyle}
         placeholder={placeholder}
+        style={{ fontFamily: typography.semiBold}}
         onFocus={() => {
           if (onFocus) onFocus();
           setIsFocused(true);

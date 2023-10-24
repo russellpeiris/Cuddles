@@ -1,22 +1,26 @@
-import React from 'react'
-import { View } from 'react-native'
-import StarRating from 'react-native-star-rating'
+import React, { useState } from 'react';
+import { View } from 'react-native';
+import StarRating from 'react-native-star-rating';
 
 export const StarRatings = () => {
-    const [starCount, setStarCount] = React.useState(0);
+  const [starCount, setStarCount] = useState(0);
+
+  const onStarRatingPress = (rating) => {
+    setStarCount(rating);
+  };
+
   return (
     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <StarRating
-        disabled={false} // Change to true if you want a read-only rating
+      <StarRating
+        disabled={false}
         maxStars={5}
-        rating={starCount}
-        selectedStar={(rating) => setStarCount(rating)}
+        rating={starCount} 
+        selectedStar={onStarRatingPress} 
         starSize={15}
         fullStarColor="gold"
-        emptyStarColor="gray" 
-        starStyle={{ margin: 0, padding: 0 }}
-        />
+        emptyStarColor="gray"
+        starStyle={{ marginRight: 2 }}
+      />
     </View>
-  )
-}
-
+  );
+};
