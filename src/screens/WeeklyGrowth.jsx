@@ -21,7 +21,7 @@ const WeeklyGrowth = () => {
             {article &&
               article.map((item) => {
                 return (
-                  <TouchableOpacity key={item.id} onPress={() => handleArticlePress(article)}>
+                  <TouchableOpacity key={item.id} onPress={() => handleArticlePress(item)}>
                     <View>
                       <ArticleCard
                         title={item.title}
