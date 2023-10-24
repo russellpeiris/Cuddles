@@ -7,16 +7,19 @@ import { colors, dimen, typography } from '../../theme';
 import { StyleSheet, Text, View } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import React from 'react';
+import { useUser } from '../context';
 
 const Home = () => {
+
+  const { user } = useUser();
+  console.log('user: ', user);
   const navigation = useNavigation();
+
   const handlePress = () => {
-    // Navigate to the 'DailyInsights' screen
     navigation.navigate('DailyInsights');
   };
 
   const handleArticleCardPress = () => {
-    // Navigate to the 'Article' screen
     navigation.navigate('Article');
   };
 
@@ -27,7 +30,7 @@ const Home = () => {
           <View style={{ padding: 16 }}>
             <View>
               <View style={styles.header}>
-                <Text style={styles.greeting}>Hello Samantha!</Text>
+                <Text style={styles.greeting}>Hello !</Text>
                 <FontAwesome5 name="bell" size={24} color="black" />
               </View>
               <View></View>

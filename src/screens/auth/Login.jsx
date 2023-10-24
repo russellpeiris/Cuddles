@@ -6,10 +6,10 @@ import { getErrorMessage } from '../../utils/errorMessages';
 import { colors, dimen, typography } from '../../../theme';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigation } from '@react-navigation/native';
-import { useLoader } from '../../context/LoaderContext';
 import { auth } from '../../config/firebase';
 import { useEffect, useState } from 'react';
 import { Text } from '@rneui/themed';
+import { useLoader } from '../../context';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
