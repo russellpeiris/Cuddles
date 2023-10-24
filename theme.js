@@ -16,6 +16,7 @@ export const colors = {
   inactiveGray: '#999999',
   disabled: '#c4c4c4',
   emergency: '#FF3838',
+  font: '#363853'
 };
 
 // Typography

@@ -31,6 +31,6 @@ export const CheckboxGroup = ({ checkboxLabels }) => {
 
 const styles = StyleSheet.create({
     textStyles:{
-       texSize:typography.regular
+      fontSize: typography.default,
     }
 })

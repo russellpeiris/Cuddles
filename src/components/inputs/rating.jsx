@@ -7,7 +7,6 @@ export const StarRatings = () => {
 
   const onStarRatingPress = (rating) => {
     setStarCount(rating);
-    // You can perform additional actions with the selected rating if needed
   };
 
   return (
@@ -15,12 +14,12 @@ export const StarRatings = () => {
       <StarRating
         disabled={false}
         maxStars={5}
-        rating={starCount} // Use the state variable for the rating
-        selectedStar={onStarRatingPress} // Call the function when a star is pressed
+        rating={starCount} 
+        selectedStar={onStarRatingPress} 
         starSize={15}
         fullStarColor="gold"
         emptyStarColor="gray"
-        starStyle={{ margin: 0, padding: 0 }}
+        starStyle={{ marginRight: 2 }}
       />
     </View>
   );
