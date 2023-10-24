@@ -6,10 +6,10 @@ import { auth, db, doc, setDoc } from '../../config/firebase';
 import { getErrorMessage } from '../../utils/errorMessages';
 import { colors, dimen, typography } from '../../../theme';
 import { useNavigation } from '@react-navigation/native';
-import { useLoader } from '../../context/LoaderContext';
 import { useEffect, useState } from 'react';
 import { Text } from '@rneui/themed';
 import User from '../../models/User';
+import { useLoader } from '../../context';
 
 const SignUp = () => {
   const [inputs, setInputs] = useState({

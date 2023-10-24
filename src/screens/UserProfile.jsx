@@ -4,10 +4,12 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { auth, db, setDoc, doc } from '../config/firebase';
 import { useNavigation } from '@react-navigation/native';
 import { colors, dimen, typography } from '../../theme';
-import { useLoader } from '../context/LoaderContext';
 import { getDoc } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
+import { User } from '../models';
+import { useLoader, useUser } from '../context';
 const UserProfile = () => {
+  const { getUser } = useUser();
   const navigation = useNavigation();
   const { isLoading, setIsLoading } = useLoader(() => {
     setIsLoading(true);
@@ -26,18 +28,9 @@ const UserProfile = () => {
     height: '',
     medicalHistory: '',
   });
-  const [userInfo, setUserInfo] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phoneNumber: '',
-    emergencyContact: '',
-    dateOfBirth: '',
-    city: '',
-    dueDate: '',
-    height: '',
-    medicalHistory: '',
-  });
+
+  const [userInfo, setUserInfo] = useState(new User());
+  getUser(userInfo);
   const toggleDatePicker = (type) => {
     if (type == 'DOB') {
       setIsVisible({ ...isVisible, DOB: !isVisible.DOB });
@@ -72,7 +65,7 @@ const UserProfile = () => {
     }
   };
   const userId = auth.currentUser.uid; // Get the currently logged in user data
-  const updateUser = async () => {
+  const handleUpdate = async () => {
     setIsLoading(true);
     try {
       const userRef = doc(db, 'users', userId);
@@ -307,7 +300,7 @@ const UserProfile = () => {
                 textAlignVertical={'top'}
               />
             </View>
-            <PrimaryButton text="Save" onPress={updateUser} />
+            <PrimaryButton text="Save" onPress={handleUpdate} />
           </View>
         </ScrollView>
       </GestureHandlerRootView>
