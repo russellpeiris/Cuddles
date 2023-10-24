@@ -12,7 +12,6 @@ import { useUser } from '../context';
 const Home = () => {
 
   const { user } = useUser();
-  console.log('user: ', user);
   const navigation = useNavigation();
 
   const handlePress = () => {
@@ -30,11 +29,11 @@ const Home = () => {
           <View style={{ padding: 16 }}>
             <View>
               <View style={styles.header}>
-                <Text style={styles.greeting}>Hello !</Text>
+                <Text style={styles.greeting}>Hello {user ? user.firstName : ' '}!</Text>
                 <FontAwesome5 name="bell" size={24} color="black" />
               </View>
               <View></View>
-              <Text style={styles.weekText}>Week 1</Text>
+              <Text style={styles.weekText}>Current Week</Text>
             </View>
             <DateSlider />
             <TouchableOpacity onPress={handleArticleCardPress}>
