@@ -4,12 +4,15 @@ import React from 'react';
 import { article } from '../utils/weeklyArticles';
 
 
-const Article = () => {
+const Article = ({route}) => {
+  const { title, content, imageUrl } = route.params.articleData;
+  console.log('title: ', title);
+
   return (
     <GestureHandlerRootView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <Image source={{ uri: article.ImageUrl}} style={styles.image} />
-        <Text style={styles.title}>{article.title}</Text>
+        <Text style={styles.title}>{title}</Text>
         <Text style={styles.subtitle}>Author</Text>
         <Text style={styles.paragraph}>
            {article.content}
