@@ -1,5 +1,6 @@
 export const article = [
     week1={
+        id: 1,
         title: "Week 1",
         content: "Conception period ",
         imageUrl: "https://assets.babycenter.com/ims/2015/01/pregnancy-week-2-fertilization.jpg?width=722"
