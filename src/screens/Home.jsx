@@ -6,14 +6,19 @@ import { useNavigation } from '@react-navigation/native';
 import { colors, dimen, typography } from '../../theme';
 import { StyleSheet, Text, View } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
-import React from 'react';
-import { useUser } from '../context';
+import React, { useEffect } from 'react';
+import { useLoader, useUser } from '../context';
+import { auth, db, setDoc, doc } from '../config/firebase';
+import { getDoc } from 'firebase/firestore';
 
 const Home = () => {
-
-  const { user } = useUser();
+  
   const navigation = useNavigation();
+  const { getUser, user } = useUser();
 
+  const { isLoading, setIsLoading } = useLoader(() => {
+    setIsLoading(true);
+  });
   const handlePress = () => {
     navigation.navigate('DailyInsights');
   };
@@ -21,7 +26,28 @@ const Home = () => {
   const handleArticleCardPress = () => {
     navigation.navigate('Article');
   };
-
+  const userId = auth.currentUser.uid; 
+    useEffect(() => {
+      setIsLoading(true);
+      const userRef = doc(db, 'users', userId);
+  
+      const fetchUserData = async () => {
+        try {
+          const documentSnapshot = await getDoc(userRef);
+  
+          if (documentSnapshot.exists()) {
+            const data = documentSnapshot.data();
+            getUser(data);
+          }
+        } catch (error) {
+          console.error('Error fetching user data: ', error);
+        } finally {
+          setIsLoading(false);
+        }
+      };
+  
+      fetchUserData();
+    }, []);
   return (
     <SafeAreaView>
       <GestureHandlerRootView style={styles.container}>
@@ -29,7 +55,7 @@ const Home = () => {
           <View style={{ padding: 16 }}>
             <View>
               <View style={styles.header}>
-                <Text style={styles.greeting}>Hello {user ? user.firstName : ' '}!</Text>
+                <Text style={styles.greeting}>Hello {user && user.firstName}!</Text>
                 <FontAwesome5 name="bell" size={24} color="black" />
               </View>
               <View></View>

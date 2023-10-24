@@ -34,7 +34,6 @@ const Login = () => {
     setIsLoading(true);
     try {
       const loggedUser = await signInWithEmailAndPassword(auth, email, password);
-      await AsyncStorage.setItem('userId', loggedUser.uid);
     } catch (error) {
       error && setIsLoading(false);
       const errorCode = error.code;
