@@ -7,7 +7,42 @@ import { DoctorCard, RoundInputField } from '../components';
 import { dimen } from '../../theme';
 const Doctors = () => {
   const navigation = useNavigation();
-
+  const doctorData = [
+    {
+      name: "Ashynn Caizoni",
+      specialization: "Consultant Gynecologist",
+      imageUrl:
+        "https://i0.wp.com/amrak.lk/wp-content/uploads/2023/09/Plab-2.jpg?fit=1440%2C1000&ssl=1",
+      startTime: "8.00am",
+      endTime: "10.00am",
+      rate: "4",
+      status: "Online",
+      fee: "LKR 1500",
+    },
+    {
+      name: "Ashynn Caizoni",
+      specialization: "Consultant Gynecologist",
+      imageUrl:
+        "https://www.va.gov/PAINMANAGEMENT/images/Carousel_Design_HomePage_v2-02.png",
+      startTime: "8.00am",
+      endTime: "10.00am",
+      rate: "4",
+      status: "Offline",
+      fee: "LKR 1500",
+    },
+    {
+      name: "Ashynn Caizoni",
+      specialization: "Consultant Gynecologist",
+      imageUrl:
+        "https://media.istockphoto.com/id/1352251608/photo/happy-chief-nurse-working-at-the-hospital-with-a-group-of-healthcare-workers.jpg?s=612x612&w=0&k=20&c=jRFskj7Kx_rUqYIovTNI6Eeo61mR9fdTHETYQCKvllg=",
+      startTime: "8.00am",
+      endTime: "10.00am",
+      rate: "4",
+      status: "OnCall",
+      fee: "LKR 1500",
+    },
+  ];
+  
   return (
     <>
       <GestureHandlerRootView >
@@ -15,38 +50,14 @@ const Doctors = () => {
            <RoundInputField
              placeholder='Search Doctor'
            />
-           <TouchableOpacity onPress={()=> navigation.navigate('ScheduleAppointment')}>
+           {doctorData.map((doctor, index) => (
+            <TouchableOpacity key={index} onPress={()=> navigation.navigate('ScheduleAppointment')}>
             <DoctorCard
-              name="Ashynn Caizoni"
-              specialization="Consultant Gynecologist"
-              imageUrl={"https://i0.wp.com/amrak.lk/wp-content/uploads/2023/09/Plab-2.jpg?fit=1440%2C1000&ssl=1"}
-              startTime='8.00am'
-              endTime='10.00am'
-              rate= '4'
-              status='Online'
-              fee='LKR 1500'
+              doctor={doctor}
+              
             />
-            </TouchableOpacity>
-            <DoctorCard
-              name="Ashynn Caizoni"
-              specialization="Consultant Gynecologist"
-              imageUrl={"https://www.va.gov/PAINMANAGEMENT/images/Carousel_Design_HomePage_v2-02.png"}
-              startTime='8.00am'
-              endTime='10.00am'
-              rate= '4'
-              status='Offline'
-              fee='LKR 1500'
-            />
-              <DoctorCard
-              name="Ashynn Caizoni"
-              specialization="Consultant Gynecologist"
-              imageUrl={"https://media.istockphoto.com/id/1352251608/photo/happy-chief-nurse-working-at-the-hospital-with-a-group-of-healthcare-workers.jpg?s=612x612&w=0&k=20&c=jRFskj7Kx_rUqYIovTNI6Eeo61mR9fdTHETYQCKvllg="}
-              startTime='8.00am'
-              endTime='10.00am'
-              rate= '4'
-              status='OnCall'
-              fee='LKR 1500'
-            />
+          </TouchableOpacity>
+          ))}
         </ScrollView>
       </GestureHandlerRootView>
     </>
