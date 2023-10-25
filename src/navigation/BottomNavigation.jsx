@@ -100,7 +100,7 @@ const BottomNavigation = () => {
         headerLeft: () => <BackArrow />,
       })} />
       <Tab.Screen name="Milestone1" component={Milestone1} options={({navigation, route})=> ({
-        title: 'Milestone 01',
+        title: 'Milestone Details',
         headerShown: true,
         tabBarItemStyle: {display: 'none'},
         tabBarStyle: {display: 'none'},

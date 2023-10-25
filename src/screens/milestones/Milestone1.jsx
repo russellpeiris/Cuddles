@@ -4,26 +4,24 @@ import { StyleSheet, View } from 'react-native';
 import { dimen } from '../../../theme';
 import React from 'react';
 
-const Milestone1 = () => {
+const Milestone1 = ({route}) => {
+  const {content, scan1, scan2, scan3, subContent, weight, length, imageUrl} = route.params.milestoneData;
+
   return (
     <GestureHandlerRootView style={styles.container}>
       <View style={styles.subContainer}>
         <MilestoneDetail
           title="Growth Information"
-          content="Congratulations! Your baby has officially graduated this week from embryo to fetus.
-                Your baby is really taking a human shape now. Bones are forming and small indentations on the 
-                legs are developing into knees and ankles. The arms, complete with elbows and can flex already.
-                Other systems are a go too, your baby’s stomach is producing digestive juices, the kidneys are 
-                producing larger quantities of urine"
+          content={content}
           scanTitle="Upcoming Tests and Scans"
-          scan1="STD Screening Scan"
-          scan2="Nuchal Translucency Scan"
-          scan3="Complete Blood Count"
+          scan1={scan1}
+          scan2={scan2}
+          scan3={scan3}
           title2="Baby Growth Comparison"
-          subContent="Your baby is now a size of a Strawberry!"
-          weight="0.6 kg"
-          length="1.5 cm"
-          imageURL={'https://berrypeople.co.uk/wp-content/uploads/2020/05/strawberry@3x.png'}
+          subContent={subContent}
+          weight={weight}
+          length={length}
+          imageURL={imageUrl}
         />
       </View>
     </GestureHandlerRootView>

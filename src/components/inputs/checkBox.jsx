@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { dimen, typography } from '../../../theme';
-import { CheckBox } from '@rneui/base';
+import { CheckBox } from '@rneui/themed';
+import { typography } from '../../../theme';
 
 export const CheckboxGroup = ({ checkboxLabels }) => {
   const [checkboxStates, setCheckboxStates] = useState(
     Array(checkboxLabels.length).fill(false)
   );
+
 
   const handleCheckboxChange = (index) => {
     const newCheckboxStates = [...checkboxStates];
@@ -19,8 +20,8 @@ export const CheckboxGroup = ({ checkboxLabels }) => {
       {checkboxLabels.map((label, index) => (
         <View key={index} style={{ flexDirection: 'row', alignItems: 'center' }}>
           <CheckBox
-            value={checkboxStates[index]}
-            onValueChange={() => handleCheckboxChange(index)}
+            checked={checkboxStates[index]}
+            onPress={() => handleCheckboxChange(index)}
           />
           <Text style={styles.textStyles}>{label}</Text>
         </View>
@@ -30,7 +31,7 @@ export const CheckboxGroup = ({ checkboxLabels }) => {
 };
 
 const styles = StyleSheet.create({
-    textStyles:{
-      fontSize: typography.default,
-    }
+  textStyles:{
+    fontSize: typography.default,
+  }
 })
