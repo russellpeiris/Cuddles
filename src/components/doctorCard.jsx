@@ -1,7 +1,7 @@
 import { colors, dimen, typography } from '../../theme';
 import { StyleSheet, Text, View } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
-// import { StarRatings } from './inputs/rating';
+import { StarRatings } from './inputs/rating';
 import { Image } from '@rneui/base';
 import React, { useState } from 'react';
 
@@ -31,7 +31,7 @@ export const DoctorCard = ({ doctor }) => {
           <Text style={styles.specialization}>{doctor.specialization}</Text>
         </View>
         <View style={styles.row}>
-          {/* <StarRatings rating={rating} onStarRatingPress={handleStarRatingPress} /> */}
+          <StarRatings rating={rating} onStarRatingPress={handleStarRatingPress} />
         </View>
         <View style={styles.row}>
           <Text style={styles.time}>
