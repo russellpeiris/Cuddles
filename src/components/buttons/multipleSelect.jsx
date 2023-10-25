@@ -1,10 +1,14 @@
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import SimpleSelectButton from 'react-native-simple-select-button';
 import { colors } from '../../../theme';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-const MultipleSelector = ({ buttonList }) => {
-    const [choice, setChoice] = useState([]);
+const MultipleSelector = ({ buttonList, onValueChange, initial}) => {
+  const [choice, setChoice] = useState([]);
+  
+      useEffect(() => {
+        setChoice(initial ? initial : []);
+      }, [initial]);
 
     return (
       <View style={styles.gridContainer}>
@@ -22,6 +26,7 @@ const MultipleSelector = ({ buttonList }) => {
                 ? choice.filter((value) => value !== item.value)
                 : [...choice, item.value];
               setChoice(updatedChoice);
+              onValueChange(updatedChoice);
             }}
           >
             <Text
