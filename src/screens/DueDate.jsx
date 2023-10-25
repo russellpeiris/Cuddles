@@ -1,10 +1,16 @@
-import { MenuButtons, PrimaryButton, RoundInputField } from '../components';
+import { DropDown, MenuButtons, PrimaryButton, RoundInputField } from '../components';
 import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler'
 import { colors, dimen, typography } from '../../theme';
 import { StyleSheet, View, Text } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 
 const DueDate = () => {
+  const[typeOpen, setTypeOpen] = useState(false);
+  const[typeValue, setTypeValue] = useState(null);
+  const [types, setTypes] = useState([
+    {label:'Last Menstrual Period', value:'last menstrual period'},
+    {label:'Ultrasound Scan', value:'ultrasound scan'}
+  ])
   return (
     <GestureHandlerRootView style={styles.container}>
       <View style={styles.formContainer}>
@@ -17,19 +23,25 @@ const DueDate = () => {
         >
           Set your due date
         </Text>
-        <View>
-          <RoundInputField
-            onBlur={() => {}}
-            width="100%"
+        <View style={{width:'100%'}}>
+          <DropDown
             label="Estimate my due date based on"
+            open={typeOpen}
+            value={typeValue}
+            items={types}
+            setOpen={setTypeOpen}
+            setValue={setTypeValue}
+            setItems={setTypes}
             placeholder="Select an option"
+            zIndex={3000}
+            zIndexInverse={1000}
           />
         </View>
         <View>
           <RoundInputField
             onBlur={() => {}}
             width="100%"
-            label="Due date"
+            label="Enter Last Menstruation Date"
             placeholder="Estimated due date"
           />
         </View>
