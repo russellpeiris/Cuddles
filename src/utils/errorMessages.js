@@ -63,9 +63,9 @@ export const validateUpdateForm = (data) => {
     validationError.city = 'City is required';
   }
 
-  if (!data.dueDate) {
-    validationError.dueDate = 'Due date is required';
-  } 
+  // if (!data.dueDate) {
+  //   validationError.dueDate = 'Due date is required';
+  // } 
 
   // if (!data.height) {
   //   validationError.height = 'Height is required';

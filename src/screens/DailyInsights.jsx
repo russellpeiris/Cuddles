@@ -7,36 +7,79 @@ import {
 } from '../components';
 import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler';
 import MultipleSelector from '../components/buttons/multipleSelect';
-import React, { useCallback, useEffect, useState } from 'react';
-import DropDownPicker from 'react-native-dropdown-picker';
+import { arrayUnion, getDoc, updateDoc } from 'firebase/firestore';
 import { colors, dimen, typography } from '../../theme';
 import { StyleSheet, Text, View } from 'react-native';
+import { buttonList, moodsList } from '../constants';
+import { auth, db, doc } from '../config/firebase';
+import React, { useEffect, useState } from 'react';
 import { DailyInsight } from '../models';
+import { useLoader, useUser } from '../context';
+import { useNavigation } from '@react-navigation/native';
 const DailyInsights = () => {
-  const [dailyInsight, setDailyInsight] = useState(new DailyInsight());
+  const [formData, setFormData] = useState(new DailyInsight().insights);
   const [moodOpen, setMoodOpen] = useState(false);
   const [moodValue, setMoodValue] = useState(null);
-  const [moods, setMoods] = useState([
-    { label: 'Happy', value: 'happy' },
-    { label: 'Calm', value: 'calm' },
-    { label: 'Anxious', value: 'anxious' },
-    { label: 'Confused', value: 'confused' },
-    { label: 'Mood Swings', value: 'moodSwings' },
-    { label: 'Depressed', value: 'depressed' },
-  ]);
-  const buttonList = [
-    { label: 'Braxton Hicks Contractions', value: 'braxtonHicksContractions' },
-    { label: 'Swelling', value: 'swelling' },
-    { label: 'Morning Sickness', value: 'morningSickness' },
-    { label: 'Heartburn', value: 'heartburn' },
-    { label: 'Backache', value: 'backache' },
-    { label: 'Frequent Urination', value: 'frequentUrination' },
-    { label: 'Round Ligament Pain', value: 'roundLigamentPain' },
-];
+  const [kicks, setKicks] = useState(null);
+  const [selectedPains, setSelectedPains] = useState([]);
+  const [moods, setMoods] = useState(moodsList);
+  const { navigate } = useNavigation();
+  const { user, updateUserField } = useUser();
+  const { isLoading, setIsLoading } = useLoader(() => {
+    setIsLoading(true);
+  });
 
   useEffect(() => {
-    setMoodValue(dailyInsight.mood);
-  }, [dailyInsight.mood]);
+    if (user && user.dailyInsights) {
+      const todaysInsights = user.dailyInsights.find(item => item.day === today);
+      if (todaysInsights && todaysInsights.insights) {
+        const { kickCount, pains, mood } = todaysInsights.insights;
+        setKicks(kickCount || null);
+        setSelectedPains(pains || []);
+        setMoodValue(mood || null);
+        setFormData(todaysInsights.insights);
+      } 
+    }
+  }, [user]);
+
+  const today = new Date().toLocaleDateString('en-GB');
+  const handleUpdate = async () => {
+    setIsLoading(true);
+    try {
+      formData.kickCount = kicks;
+      formData.pains = selectedPains;
+
+      const userId = auth.currentUser.uid;
+      const userRef = doc(db, 'users', userId);
+
+      if (user) {
+        const insights = user.dailyInsights || [];
+        const existingIndex = insights.findIndex((item) => item.day === today);
+
+        if (existingIndex !== -1) {
+          // If an object with today's date exists, update it
+          insights[existingIndex] = { day: today, insights: formData };
+        } else {
+          // If not, add a new object with today's date
+          insights.push({ day: today, insights: formData });
+        }
+
+        await updateDoc(userRef, { dailyInsights: insights });
+        updateUserField({dailyInsights: insights});
+        navigate('Dashboard');
+        
+        console.log('success');
+      } else {
+        console.error('User document not found');
+      }
+    } catch (error) {
+      error && setIsLoading(false);
+      console.error('Error updating insight data:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <GestureHandlerRootView style={styles.container}>
       <ScrollView nestedScrollEnabled={true}>
@@ -59,7 +102,7 @@ const DailyInsights = () => {
               setOpen={setMoodOpen}
               setValue={setMoodValue}
               onChangeValue={(value) => {
-                setDailyInsight({ ...dailyInsight, mood: value });
+                setFormData({ ...formData, mood: value });
               }}
               setItems={setMoods}
               placeholder="Select Mood"
@@ -68,7 +111,7 @@ const DailyInsights = () => {
             />
           </View>
           <View>
-            <IncrementDecrement label="Baby kick count" />
+            <IncrementDecrement initial={kicks} onValueChange={setKicks} label="Baby kick count" />
           </View>
           <View>
             <Text style={{ fontFamily: typography.semiBold, fontSize: typography.default }}>
@@ -83,11 +126,11 @@ const DailyInsights = () => {
               }}
             >
               <RoundInputField
-                // value={userInfo.phoneNumber}
-                // onChangeText={(value) => {
-                //   setUserInfo({ ...userInfo, phoneNumber: value });
-                //   setError((prevError) => ({ ...prevError, phoneNumber: '' }));
-                // }}
+                value={formData.weight}
+                onChangeText={(value) => {
+                  setFormData({ ...formData, weight: value });
+                  // setError((prevError) => ({ ...prevError, phoneNumber: '' }));
+                }}
                 // errorMessage={error.phoneNumber}
                 // type={'tel'}
                 onBlur={() => {}}
@@ -96,9 +139,9 @@ const DailyInsights = () => {
                 placeholder="0.0 Kg"
               />
               <RoundInputField
-                value={dailyInsight.bloodPressure}
+                value={formData.bloodPressure}
                 onChangeText={(value) => {
-                  setDailyInsight({ ...dailyInsight, bloodPressure: value });
+                  setFormData({ ...formData, bloodPressure: value });
                   // setError((prevError) => ({ ...prevError, emergencyContact: '' }));
                 }}
                 // errorMessage={error.emergencyContact}
@@ -118,14 +161,14 @@ const DailyInsights = () => {
             >
               Pains and discomforts you are facing today{' '}
             </Text>
-            <MultipleSelector buttonList={buttonList} />
+            <MultipleSelector initial={selectedPains}  onValueChange={setSelectedPains} buttonList={buttonList} />
             <DescInputField
-              // value={userInfo.medicalHistory}
-              // onChangeText={(value) => {
-              //   setUserInfo({ ...userInfo, medicalHistory: value });
-              //   setError((prevError) => ({ ...prevError, medicalHistory: '' }));
-              // }}
-              // errorMessage={error.medicalHistory}
+              value={formData.note}
+              onChangeText={(value) => {
+                setFormData({ ...formData, note: value });
+                // setError((prevError) => ({ ...prevError, note: '' }));
+              }}
+              // errorMessage={error.note}
               type={'text'}
               onBlur={() => {}}
               label="Anything to note?"
@@ -135,7 +178,7 @@ const DailyInsights = () => {
               textAlignVertical={'top'}
             />
           </View>
-          <PrimaryButton text="Save" />
+          <PrimaryButton text="Save" onPress={handleUpdate} />
         </View>
       </ScrollView>
     </GestureHandlerRootView>
