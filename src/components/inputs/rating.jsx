@@ -1,20 +1,14 @@
-import React, { useState } from 'react';
 import { View } from 'react-native';
 import StarRating from 'react-native-star-rating';
 
-export const StarRatings = () => {
-  const [starCount, setStarCount] = useState(0);
-
-  const onStarRatingPress = (rating) => {
-    setStarCount(rating);
-  };
+export const StarRatings = ({ rating, onStarRatingPress }) => {
 
   return (
     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
       <StarRating
         disabled={false}
         maxStars={5}
-        rating={starCount} 
+        rating={rating} 
         selectedStar={onStarRatingPress} 
         starSize={15}
         fullStarColor="gold"

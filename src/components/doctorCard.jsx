@@ -3,37 +3,41 @@ import { StyleSheet, Text, View } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { StarRatings } from './inputs/rating';
 import { Image } from '@rneui/base';
-import React from 'react';
-export const DoctorCard = ({ name, specialization, imageUrl, startTime, endTime, fee, status }) => {
-  const [rating, setRating] = React.useState(0); // State for managing the rating
+import React, { useState } from 'react';
 
+export const DoctorCard = ({ doctor }) => {
+  const [rating, setRating] = useState(doctor.rating);
+
+  const handleStarRatingPress = (newRating) => {
+    setRating(newRating);
+  };
   return (
     <View style={styles.container}>
       <Image
         source={{
-          uri: imageUrl,
+          uri: doctor.imageUrl,
         }}
         style={styles.image}
       />
       <View style={styles.content}>
         <View style={styles.row}>
-          <Text style={styles.title}>{name}</Text>
+          <Text style={styles.title}>{doctor.name}</Text>
           <View style={styles.statusContainer}>
             <FontAwesome name="circle" size={12} color={colors.successGreen} />
-            <Text style={styles.status}>{status}</Text>
+            <Text style={styles.status}>{doctor.status}</Text>
           </View>
         </View>
         <View style={styles.row}>
-          <Text style={styles.specialization}>{specialization}</Text>
+          <Text style={styles.specialization}>{doctor.specialization}</Text>
         </View>
         <View style={styles.row}>
-          <StarRatings setRating={setRating} />
+          <StarRatings rating={rating} onStarRatingPress={handleStarRatingPress} />
         </View>
         <View style={styles.row}>
           <Text style={styles.time}>
-            {startTime}-{endTime}
+            {doctor.startTime}-{doctor.endTime}
           </Text>
-          <Text style={styles.fee}>{fee}</Text>
+          <Text style={styles.fee}>{doctor.fee}</Text>
         </View>
       </View>
     </View>
