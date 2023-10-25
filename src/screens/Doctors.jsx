@@ -48,7 +48,7 @@ const Doctors = () => {
           {doctors.map((doctor) => (
             <TouchableOpacity
               key={doctor.id}
-              onPress={() => navigation.navigate('ScheduleAppointment')}
+              onPress={() => navigation.navigate('ScheduleAppointment', { selectedDoctor: doctor })}
             >
               <DoctorCard doctor={doctor} />
             </TouchableOpacity>

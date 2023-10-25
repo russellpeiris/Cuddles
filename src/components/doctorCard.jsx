@@ -32,9 +32,9 @@ export const DoctorCard = ({ doctor }) => {
         <View style={styles.row}>
           <Text style={styles.specialization}>{doctor.specialization}</Text>
         </View>
-        {/* <View style={styles.row}>
-          <StarRatings rating={doctor.rating} />
-        </View> */}
+        <View style={styles.row}>
+          <StarRatings rating='3' />
+        </View>
         <View style={styles.row}>
           <Text style={styles.time}>{doctor.availableHrs}</Text>
         </View>
