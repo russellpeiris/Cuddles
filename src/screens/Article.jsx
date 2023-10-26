@@ -7,7 +7,6 @@ import { colors, dimen } from '../../theme';
 
 const Article = ({route}) => {
   const { title, content, imageUrl } = route.params.articleData;
-  console.log('title: ', title);
 
   return (
     <GestureHandlerRootView style={styles.container}>
