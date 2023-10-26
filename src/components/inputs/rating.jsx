@@ -8,7 +8,7 @@ export const StarRatings = ({ rating, onStarRatingPress }) => {
       <StarRating
         disabled={false}
         maxStars={5}
-        rating={rating} 
+        rating={parseInt(rating)} 
         selectedStar={onStarRatingPress} 
         starSize={15}
         fullStarColor="gold"
