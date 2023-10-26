@@ -60,11 +60,6 @@ const DueDate = () => {
         setShowCongrats(true);
     }
   };
-  /*const calculateCurrentWeek = (startDate, currentDate) => {
-    const timeDiff = currentDate - startDate;
-    const weekNumber = Math.floor(timeDiff / (7 * 24 * 60 * 60 * 1000));
-    setCurrentWeek(weekNumber);
-  };*/
 
   const calculateCurrentWeek = (startDate, currentDate) => {
     const weekNumber = currentDate.diff(startDate, 'weeks') ;
@@ -154,7 +149,7 @@ const DueDate = () => {
          <View style={styles.modalContainer}>
             <View style={styles.modalContent}>
               <Text style={styles.congratsText}>
-                Congratulations! You're in your {currentWeek} week of pregnancy.
+                Congratulations! You're in your {currentWeek}th week of pregnancy.
               </Text>
               <Pressable onPress={() => setShowCongrats(false)}>
                 <Text style={styles.closeButton}>Close</Text>
