@@ -12,4 +12,6 @@ import Milestone1 from './milestones/Milestone1';
 import Article from './Article';
 import Explore from './Explore';
 import ExploreArticle from './ExploreArticle';
-export { Home, SignUp, Login, UserProfile, Doctors, Menu, DailyInsights, Article, Explore, ExploreArticle , DueDate, Milestones, WeeklyGrowth, Milestone1};
+import GetStarted from './onBoard/GetStarted';
+import Splash from './Splash';
+export { Home, SignUp, Login, UserProfile, Doctors, Menu, DailyInsights, Article, Explore, ExploreArticle , DueDate, Milestones, WeeklyGrowth, Milestone1, GetStarted, Splash};
