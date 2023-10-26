@@ -8,7 +8,7 @@ import { useRoute } from '@react-navigation/native';
 
 export const ScheduleAppointment = () => {
 
-  // Access the selected doctor's data from the route object
+  // Accessing the selected doctor's data from the route object
   const { params } = useRoute();
   const selectedDoctor = params?.selectedDoctor || {};
 
