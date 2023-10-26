@@ -5,9 +5,9 @@ import {
   RoundInputField,
 } from '../components';
 import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler';
-import { StyleSheet, View, Text, Pressable } from 'react-native';
+import { StyleSheet, View, Text, Pressable, Modal } from 'react-native';
 import { colors, dimen, typography } from '../../theme';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import { DATE_FORMAT } from '../constants';
 
@@ -16,6 +16,8 @@ const DueDate = () => {
     dueDate: '',
   });
   const [date, setDate] = useState(new Date());
+  const [showCongrats, setShowCongrats] = useState(false);
+  const [currentWeek, setCurrentWeek] = useState(null);
   const [estimatedDueDate, setEstimatedDueDate] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
   const [typeOpen, setTypeOpen] = useState(false);
@@ -37,7 +39,8 @@ const DueDate = () => {
       if (Platform.OS === 'android') {
         toggleDatePicker();
         setInputs({ ...inputs, dueDate: moment(currentDate).format(DATE_FORMAT) });
-        // setError((prevError) => ({ ...prevError, dueDate: '' }));
+        // Calculate and update the current week
+      calculateCurrentWeek(moment(inputs.dueDate, DATE_FORMAT), currentDate);
       }
     } else {
       toggleDatePicker();
@@ -46,22 +49,32 @@ const DueDate = () => {
 
   const calculateDueDate = () => {
     if (inputs.dueDate) {
+      const selectedDate = moment(inputs.dueDate, DATE_FORMAT);
       formattedDate = moment(inputs.dueDate ,DATE_FORMAT);
       formattedDate.add(280, 'days');
       const calDate = formattedDate.format(DATE_FORMAT);
       setEstimatedDueDate(calDate);
+
+        // Calculate and update the current week
+        calculateCurrentWeek(selectedDate, moment());
+        setShowCongrats(true);
     }
   };
-  const calculateCurrentWeek = (startDate, currentDate) => {
+  /*const calculateCurrentWeek = (startDate, currentDate) => {
     const timeDiff = currentDate - startDate;
     const weekNumber = Math.floor(timeDiff / (7 * 24 * 60 * 60 * 1000));
+    setCurrentWeek(weekNumber);
+  };*/
+
+  const calculateCurrentWeek = (startDate, currentDate) => {
+    const weekNumber = currentDate.diff(startDate, 'weeks') ;
     setCurrentWeek(weekNumber);
   };
 
   useEffect(() => {
     // Calculate and update the current week when the component mounts
     if (inputs.dueDate) {
-      calculateCurrentWeek(new Date(inputs.dueDate), new Date());
+      calculateCurrentWeek(moment(inputs.dueDate, DATE_FORMAT), moment());
     }
   }, [inputs.dueDate]);
 
@@ -137,14 +150,18 @@ const DueDate = () => {
         <View style={{}}>
           <PrimaryButton text="Calculate" onPress={calculateDueDate} />
         </View>
-        <Text style={{ fontFamily: typography.semiBold,fontSize:typography.default, color: colors.black,marginTop:16}}>
-             Current week
-            </Text>
-         <View style={styles.display}>
-            <Text style={{ fontFamily: typography.bold, fontSize:typography.default, color: colors.descriptionGray }}>
-            Current week: {currentWeek ? currentWeek : 'Calculating...'}
-           </Text>
-         </View>
+         <Modal visible={showCongrats} transparent animationType='slide'>
+         <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              <Text style={styles.congratsText}>
+                Congratulations! You're in your {currentWeek} week of pregnancy.
+              </Text>
+              <Pressable onPress={() => setShowCongrats(false)}>
+                <Text style={styles.closeButton}>Close</Text>
+              </Pressable>
+            </View>
+          </View> 
+         </Modal>
       </View>
     </GestureHandlerRootView>
   );
@@ -175,4 +192,35 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: colors.primaryPink,
+  },
+  modalContent: {
+    backgroundColor: 'white',
+    padding: 20,
+    borderRadius: 10,
+    elevation: 5,
+    alignItems: 'center',
+  },
+  congratsButton: {
+    fontFamily: typography.regular,
+    color: colors.primaryPink,
+    textDecorationLine: 'underline',
+    textAlign: 'center',
+  },
+  congratsText: {
+    fontFamily: typography.semiBold,
+    fontSize: typography.default,
+    color: colors.infoNavy,
+    textAlign: 'center',
+  },
+  closeButton: {
+    fontFamily: typography.semiBold,
+    fontSize: typography.default,
+    marginTop:20,
+  }
 });
