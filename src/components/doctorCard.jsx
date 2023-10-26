@@ -6,11 +6,13 @@ import { Image } from '@rneui/base';
 import React, { useState } from 'react';
 
 export const DoctorCard = ({ doctor }) => {
-  const [rating, setRating] = useState(doctor.rating);
 
-  const handleStarRatingPress = (newRating) => {
-    setRating(newRating);
-  };
+  // const [rating, setRating] = useState(doctor.rating);
+
+  // const handleStarRatingPress = (newRating) => {
+  //   setRating(newRating);
+  // };
+  
   return (
     <View style={styles.container}>
       <Image
@@ -24,20 +26,17 @@ export const DoctorCard = ({ doctor }) => {
           <Text style={styles.title}>{doctor.name}</Text>
           <View style={styles.statusContainer}>
             <FontAwesome name="circle" size={12} color={colors.successGreen} />
-            <Text style={styles.status}>{doctor.status}</Text>
+            {/* <Text style={styles.status}>{doctor.status}</Text> */}
           </View>
         </View>
         <View style={styles.row}>
           <Text style={styles.specialization}>{doctor.specialization}</Text>
         </View>
         <View style={styles.row}>
-          <StarRatings rating={rating} onStarRatingPress={handleStarRatingPress} />
+          <StarRatings rating='3' />
         </View>
         <View style={styles.row}>
-          <Text style={styles.time}>
-            {doctor.startTime}-{doctor.endTime}
-          </Text>
-          <Text style={styles.fee}>{doctor.fee}</Text>
+          <Text style={styles.time}>{doctor.availableHrs}</Text>
         </View>
       </View>
     </View>
