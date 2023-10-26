@@ -14,7 +14,11 @@ export const DropDown = ({
   onOpen,
   onChangeValue,
   label,
+  width
 }) => {
+  const containerWidth = {
+    width: width ? width : '47%'
+  }
   return (
     <View style={{marginBottom: 19}}>
       <Text
@@ -22,7 +26,7 @@ export const DropDown = ({
       >
         {label}
       </Text>
-      <View style={{width: '47%'}}>
+      <View style={containerWidth}>
       <DropDownPicker
         style={styles.dropdown}
         textStyle={{ fontSize: 14, fontFamily: typography.medium, paddingLeft: dimen.default }}
