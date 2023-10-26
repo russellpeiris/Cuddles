@@ -2,6 +2,8 @@ export const DATE_TYPES = {
   DOB: 'DOB',
   DUE_DATE: 'dueDate',
 };
+
+export const DATE_FORMAT = 'DD-MM-YYYY';
 export const moodsList = [
   { label: 'Happy', value: 'happy' },
   { label: 'Calm', value: 'calm' },
