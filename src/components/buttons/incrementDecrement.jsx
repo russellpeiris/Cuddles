@@ -1,27 +1,35 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { colors, typography } from '../../../theme';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Input } from '@rneui/themed';
 import { Button } from '@rneui/base';
 
-export const IncrementDecrement = ({ label }) => {
+export const IncrementDecrement = ({ label, onValueChange, initial }) => {
+  useEffect(() => {
+    setCount(initial ? initial : 0);
+  }, [initial]);
   const [count, setCount] = useState(0);
 
   function increment() {
     setCount(function (prevCount) {
-      return (prevCount += 1);
+      const newCount = prevCount + 1;
+      onValueChange(newCount);
+      return newCount;
     });
   }
 
   function decrement() {
     setCount(function (prevCount) {
       if (prevCount > 0) {
-        return (prevCount -= 1);
+        const newCount = prevCount - 1;
+        onValueChange(newCount);
+        return newCount;
       } else {
-        return (prevCount = 0);
+        return 0;
       }
     });
   }
+
   return (
     <>
       <Text style={styles.label}>{label}</Text>
@@ -37,8 +45,8 @@ export const IncrementDecrement = ({ label }) => {
           placeholderTextColor='black'
           containerStyle={styles.inputContainer}
           inputContainerStyle={styles.countInputContainer}
-          style={styles.input}
-          placeholder={count.toString()}
+          inputStyle={styles.input}
+          value={count?.toString()}
         />
         <Button
           title="+"
@@ -63,6 +71,7 @@ const styles = StyleSheet.create({
     width: '47%',
     alignItems: 'center',
     marginBottom: 19,
+    
   },
   decrementButton: {
     width: 55,
@@ -107,7 +116,9 @@ const styles = StyleSheet.create({
     padding: 0,
     margin: 0,
     textAlign: 'center',
-    fontSize: typography.default,
+    fontSize: typography.small,
+    fontFamily: typography.semiBold,
+
   },
   buttonText: {
     fontSize: 16,

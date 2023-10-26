@@ -9,7 +9,8 @@ import { useLoader, useUser } from '../context';
 import { getDoc } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { User } from '../models';
-import { DATE_TYPES } from '../constants';
+import { DATE_FORMAT, DATE_TYPES } from '../constants';
+import moment from 'moment';
 const UserProfile = () => {
   const navigation = useNavigation();
   const { getUser, user } = useUser();
@@ -44,7 +45,7 @@ const UserProfile = () => {
           setDate({ ...date, DOB: currentDate });
           if (Platform.OS === 'android') {
             toggleDatePicker(type);
-            setUserInfo({ ...userInfo, dateOfBirth: currentDate.toDateString() });
+            setUserInfo({ ...userInfo, dateOfBirth: moment(currentDate).format(DATE_FORMAT) });
             setError((prevError) => ({ ...prevError, dateOfBirth: '' }));
           }
           break;
@@ -52,7 +53,7 @@ const UserProfile = () => {
           setDate({ ...date, dueDate: currentDate });
           if (Platform.OS === 'android') {
             toggleDatePicker(type);
-            setUserInfo({ ...userInfo, dueDate: currentDate.toDateString() });
+            setUserInfo({ ...userInfo, dueDate: moment(currentDate).format(DATE_FORMAT) });
             setError((prevError) => ({ ...prevError, dueDate: '' }));
           }
           break;
@@ -196,7 +197,7 @@ const UserProfile = () => {
                   <RoundInputField
                     value={userInfo.dateOfBirth}
                     onChangeText={(value) => {
-                      setUserInfo({ ...userInfo, dateOfBirth: value.toDateString() });
+                      setUserInfo({ ...userInfo, dateOfBirth: moment(value).format(DATE_FORMAT) });
                       setDate(new Date(value));
                       setError((prevError) => ({ ...prevError, dateOfBirth: '' }));
                     }}
@@ -205,7 +206,7 @@ const UserProfile = () => {
                     onBlur={() => {}}
                     width="100%"
                     label="Date of Birth"
-                    placeholder="DD MMM YYYY"
+                    placeholder={DATE_FORMAT}
                     editable={false}
                   />
                 </Pressable>
@@ -243,7 +244,7 @@ const UserProfile = () => {
                   <RoundInputField
                     value={userInfo.dueDate}
                     onChangeText={(value) => {
-                      setUserInfo({ ...userInfo, dueDate: value.toDateString() });
+                      setUserInfo({ ...userInfo, dueDate: moment(value).format(DATE_FORMAT) });
                       setDate(new Date(value));
                       setError((prevError) => ({ ...prevError, dueDate: '' }));
                     }}
@@ -252,7 +253,7 @@ const UserProfile = () => {
                     onBlur={() => {}}
                     width="100%"
                     label="Expected due date"
-                    placeholder="DD MMM YYYY"
+                    placeholder={DATE_FORMAT}
                     editable={false}
                   />
                 </Pressable>

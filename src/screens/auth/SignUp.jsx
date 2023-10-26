@@ -37,7 +37,7 @@ const SignUp = () => {
 
       if (Platform.OS === 'android') {
         toggleDatePicker();
-        setInputs({ ...inputs, dueDate: currentDate.toDateString() });
+        setInputs({ ...inputs, dueDate: currentDate.toLocaleDateString('en-GB') });
         setError((prevError) => ({ ...prevError, dueDate: '' }));
       }
     } else {
@@ -276,7 +276,7 @@ const SignUp = () => {
                   placeholder="Expected due date"
                   value={inputs.dueDate}
                   onChangeText={(value) => {
-                    setInputs({ ...inputs, dueDate: value.toDateString() });
+                    setInputs({ ...inputs, dueDate: value.toLocaleDateString('en-GB') });
                     setDate(new Date(value));
                     setError((prevError) => ({ ...prevError, dueDate: '' }));
                   }}
