@@ -52,6 +52,18 @@ const DueDate = () => {
       setEstimatedDueDate(calDate);
     }
   };
+  const calculateCurrentWeek = (startDate, currentDate) => {
+    const timeDiff = currentDate - startDate;
+    const weekNumber = Math.floor(timeDiff / (7 * 24 * 60 * 60 * 1000));
+    setCurrentWeek(weekNumber);
+  };
+
+  useEffect(() => {
+    // Calculate and update the current week when the component mounts
+    if (inputs.dueDate) {
+      calculateCurrentWeek(new Date(inputs.dueDate), new Date());
+    }
+  }, [inputs.dueDate]);
 
   return (
     <GestureHandlerRootView style={styles.container}>
@@ -125,6 +137,14 @@ const DueDate = () => {
         <View style={{}}>
           <PrimaryButton text="Calculate" onPress={calculateDueDate} />
         </View>
+        <Text style={{ fontFamily: typography.semiBold,fontSize:typography.default, color: colors.black,marginTop:16}}>
+             Current week
+            </Text>
+         <View style={styles.display}>
+            <Text style={{ fontFamily: typography.bold, fontSize:typography.default, color: colors.descriptionGray }}>
+            Current week: {currentWeek ? currentWeek : 'Calculating...'}
+           </Text>
+         </View>
       </View>
     </GestureHandlerRootView>
   );
