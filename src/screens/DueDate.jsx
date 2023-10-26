@@ -2,12 +2,13 @@ import { DatePicker, DropDown, InputField, MenuButtons, PrimaryButton, RoundInpu
 import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler'
 import { colors, dimen, typography } from '../../theme';
 import { StyleSheet, View, Text, Pressable } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const DueDate = () => {
   const[inputs, setInputs] = useState({
     dueDate:'',
   })
+  const [currentWeek, setCurrentWeek] = useState(null);
   const [date, setDate] = useState(new Date());
   const[estimatedDueDate, setEstimatedDueDate] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -31,6 +32,8 @@ const DueDate = () => {
         toggleDatePicker();
         setInputs({ ...inputs, dueDate: currentDate.toDateString() });
        // setError((prevError) => ({ ...prevError, dueDate: '' }));
+       // Calculate and update the current week
+       calculateCurrentWeek(new Date(inputs.dueDate), currentDate);
       }
     } else {
       toggleDatePicker();
@@ -43,8 +46,22 @@ const DueDate = () => {
       const estimatedDueDate = new Date(selectedDate);
       estimatedDueDate.setDate(estimatedDueDate.getDate() + 7 * 40); // Adding 40 weeks
       setEstimatedDueDate(estimatedDueDate);
+      // Calculate and update the current week
+      calculateCurrentWeek(selectedDate, new Date());
     }
   };
+  const calculateCurrentWeek = (startDate, currentDate) => {
+    const timeDiff = currentDate - startDate;
+    const weekNumber = Math.floor(timeDiff / (7 * 24 * 60 * 60 * 1000));
+    setCurrentWeek(weekNumber);
+  };
+
+  useEffect(() => {
+    // Calculate and update the current week when the component mounts
+    if (inputs.dueDate) {
+      calculateCurrentWeek(new Date(inputs.dueDate), new Date());
+    }
+  }, [inputs.dueDate]);
 
   return (
     <GestureHandlerRootView style={styles.container}>
@@ -111,6 +128,14 @@ const DueDate = () => {
          <View style={{marginTop:40}}>
           <PrimaryButton text="Calculate" onPress={calculateDueDate} />
         </View>
+        <Text style={{ fontFamily: typography.semiBold,fontSize:typography.default, color: colors.black,marginTop:16}}>
+             Current week
+            </Text>
+         <View style={styles.display}>
+            <Text style={{ fontFamily: typography.bold, fontSize:typography.default, color: colors.descriptionGray }}>
+            Current week: {currentWeek ? currentWeek : 'Calculating...'}
+           </Text>
+         </View>
       </View>
     </GestureHandlerRootView>
   );
