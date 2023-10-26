@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { CheckBox } from '@rneui/themed';
 import { typography } from '../../../theme';
 
-export const CheckboxGroup = ({ checkboxLabels }) => {
+export const CheckboxGroup = ({ checkboxLabels, onCheckboxChange }) => {
   const [checkboxStates, setCheckboxStates] = useState(
     Array(checkboxLabels.length).fill(false)
   );
@@ -13,6 +13,15 @@ export const CheckboxGroup = ({ checkboxLabels }) => {
     const newCheckboxStates = [...checkboxStates];
     newCheckboxStates[index] = !newCheckboxStates[index];
     setCheckboxStates(newCheckboxStates);
+
+     // Create an array of selected reasons
+     const selectedReasons = checkboxLabels
+     .filter((_, i) => newCheckboxStates[i])
+     .map((label) => label);
+
+    // Call the onCheckboxChange callback to pass the selected reasons back to the parent component
+    onCheckboxChange(selectedReasons);
+
   };
 
   return (
