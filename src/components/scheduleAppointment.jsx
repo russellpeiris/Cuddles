@@ -4,25 +4,31 @@ import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler
 import { colors, dimen, typography } from '../../theme'
 import { StarRatings } from './inputs/rating'
 import { PrimaryButton } from './buttons/primaryButton'
+import { useRoute } from '@react-navigation/native';
 
 export const ScheduleAppointment = () => {
+
+  // Accessing the selected doctor's data from the route object
+  const { params } = useRoute();
+  const selectedDoctor = params?.selectedDoctor || {};
+
   return (
     <GestureHandlerRootView style={styles.container}>
         <ScrollView>
          <View style={styles.subConatainer}>
-            <Image source={{ uri: 'https://i0.wp.com/amrak.lk/wp-content/uploads/2023/09/Plab-2.jpg?fit=1440%2C1000&ssl=1' }} style={styles.image} />
+            <Image source={{ uri: selectedDoctor.imageUrl}} style={styles.image} />
               <View>
                 <Text style={styles.status}>Online</Text>
               </View>
               <View>
-                <Text style={styles.title}>Ashynn Caizoni</Text>
+                <Text style={styles.title}>{selectedDoctor.name}</Text>
               </View>
               <View>
-                <Text style={styles.content}>Consultant Gyenocologist</Text>
+                <Text style={styles.content}>{selectedDoctor.specialization}</Text>
               </View>
-              <StarRatings/>
+              <StarRatings rating='3'/>
               <View >
-                <Text style={styles.subcontent} >8.00 AM - 9.00 AM</Text>
+                <Text style={styles.subcontent}>Available Hours: {selectedDoctor.availableHrs}</Text>
                 <Text style={styles.subcontent}>LKR 1500.00</Text>
               </View>
               <View style={styles.buttonGap}>
