@@ -51,6 +51,7 @@ const Menu = () => {
             icon={<AlertIcon height={dimen.icon} width={dimen.icon} fill="black" />}
             txColor="white"
             text="Trigger Emergency"
+            onPress={() => navigation.navigate('Emergency')}
           />
           <View style={styles.buttonGap} />
           <MenuButtons

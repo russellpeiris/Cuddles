@@ -9,7 +9,8 @@ export default class User {
     dateOfBirth = '',
     city = '',
     height = '',
-    medicalHistory = ''
+    medicalHistory = '',
+    dailyInsights = [] 
   ) {
     this.firstName = firstName;
     this.lastName = lastName;
@@ -21,5 +22,10 @@ export default class User {
     this.city = city;
     this.height = height;
     this.medicalHistory = medicalHistory;
+    this.dailyInsights = dailyInsights; 
+  }
+
+  addDailyInsight(dailyInsight) {
+    this.dailyInsights.push(dailyInsight);
   }
 }

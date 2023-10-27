@@ -6,10 +6,10 @@ import { auth, db, doc, setDoc } from '../../config/firebase';
 import { getErrorMessage } from '../../utils/errorMessages';
 import { colors, dimen, typography } from '../../../theme';
 import { useNavigation } from '@react-navigation/native';
-import { useLoader } from '../../context/LoaderContext';
 import { useEffect, useState } from 'react';
 import { Text } from '@rneui/themed';
 import User from '../../models/User';
+import { useLoader } from '../../context';
 
 const SignUp = () => {
   const [inputs, setInputs] = useState({
@@ -37,7 +37,7 @@ const SignUp = () => {
 
       if (Platform.OS === 'android') {
         toggleDatePicker();
-        setInputs({ ...inputs, dueDate: currentDate.toDateString() });
+        setInputs({ ...inputs, dueDate: currentDate.toLocaleDateString('en-GB') });
         setError((prevError) => ({ ...prevError, dueDate: '' }));
       }
     } else {
@@ -185,9 +185,10 @@ const SignUp = () => {
 
   return (
     <>
-      <KeyboardAvoidingView style={styles.container} behavior="height">
+      <KeyboardAvoidingView behavior="height">
         <GestureHandlerRootView>
-          <ScrollView style={{ padding: dimen.default }}>
+          <ScrollView style={styles.scrollView}>
+            <View style={styles.formContainer}>
             <View style={styles.inputContainer}>
               <View style={styles.titleContainer}>
                 <Text style={styles.title}>Register</Text>
@@ -276,7 +277,7 @@ const SignUp = () => {
                   placeholder="Expected due date"
                   value={inputs.dueDate}
                   onChangeText={(value) => {
-                    setInputs({ ...inputs, dueDate: value.toDateString() });
+                    setInputs({ ...inputs, dueDate: value.toLocaleDateString('en-GB') });
                     setDate(new Date(value));
                     setError((prevError) => ({ ...prevError, dueDate: '' }));
                   }}
@@ -300,6 +301,7 @@ const SignUp = () => {
             <View style={styles.buttonContainer}>
               <PrimaryButton onPress={handleSignUp} text="Register" />
             </View>
+            </View>
           </ScrollView>
         </GestureHandlerRootView>
       </KeyboardAvoidingView>
@@ -319,22 +321,11 @@ const styles = StyleSheet.create({
     fontFamily: typography.bold,
     backgroundColor: colors.white,
   },
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    backgroundColor: colors.white,
-    height: '100%',
-    paddingHorizontal: 0,
-    paddingVertical: dimen.default,
-  },
   inputContainer: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    marginHorizontal: 0,
-    paddingHorizontal: 0,
     backgroundColor: 'white',
   },
   buttonContainer: {
@@ -343,4 +334,11 @@ const styles = StyleSheet.create({
     marginTop: 0,
     width: '100%',
   },
+  scrollView: {
+    backgroundColor: 'white',
+    height: '100%',
+  },
+  formContainer:{
+    padding: dimen.default
+  }
 });

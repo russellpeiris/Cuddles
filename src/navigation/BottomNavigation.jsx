@@ -1,13 +1,15 @@
 import { DailyInsights, Doctors, Home, Menu, Milestone1, Milestones, UserProfile, WeeklyGrowth, ExploreArticle, Explore, Article, GetStarted, Splash} from '../screens';
 import { MenuIcon, HomeIcon, AvatarIcon, DoctorIcon } from '../assets/icons';
+import { DailyInsights, Doctors, Home, Menu, Milestone1, Milestones, UserProfile, WeeklyGrowth, ExploreArticle, Explore, Article, Emergency } from '../screens';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { BottomTabBar } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
 import { colors, dimen, typography } from '../../theme';
 import { StyleSheet, View } from 'react-native';
-import { BackArrow } from '../components';
-import DueDate from '../screens/DueDate';
+import { BackArrow, ScheduleAppointment } from '../components';
 import React from 'react';
+import DueDate from '../screens/DueDate';
+
 
 const Tab = createBottomTabNavigator();
 const BottomNavigation = () => {
@@ -78,50 +80,34 @@ const BottomNavigation = () => {
           headerLeft: () => <BackArrow />,
         })}
       />
-      <Tab.Screen
-        name="DueDate"
-        component={DueDate}
-        options={({ navigation, route }) => ({
-          title: 'Due date',
-          headerShown: true,
-          tabBarItemStyle: { display: 'none' },
-          tabBarStyle: { display: 'none' },
-          headerLeft: () => <BackArrow />,
-        })}
-      />
-      <Tab.Screen
-        name="Milestones"
-        component={Milestones}
-        options={({ navigation, route }) => ({
-          title: 'Milestones',
-          headerShown: true,
-          tabBarItemStyle: { display: 'none' },
-          tabBarStyle: { display: 'none' },
-          headerLeft: () => <BackArrow />,
-        })}
-      />
-      <Tab.Screen
-        name="WeeklyGrowth"
-        component={WeeklyGrowth}
-        options={({ navigation, route }) => ({
-          title: 'Weekly Development',
-          headerShown: true,
-          tabBarItemStyle: { display: 'none' },
-          tabBarStyle: { display: 'none' },
-          headerLeft: () => <BackArrow />,
-        })}
-      />
-      <Tab.Screen
-        name="Milestone1"
-        component={Milestone1}
-        options={({ navigation, route }) => ({
-          title: 'Milestone 01',
-          headerShown: true,
-          tabBarItemStyle: { display: 'none' },
-          tabBarStyle: { display: 'none' },
-          headerLeft: () => <BackArrow />,
-        })}
-      />
+           <Tab.Screen name="DueDate" component={DueDate} options={({navigation, route})=> ({
+        title: 'Due date',
+        headerShown: true,
+        tabBarItemStyle: {display: 'none'},
+        tabBarStyle: {display: 'none'},
+        headerLeft: () => <BackArrow />,
+      })} />
+     <Tab.Screen name="Milestones" component={Milestones} options={({navigation, route})=> ({
+        title: 'Milestones',
+        headerShown: true,
+        tabBarItemStyle: {display: 'none'},
+        tabBarStyle: {display: 'none'},
+        headerLeft: () => <BackArrow />,
+      })} />
+     <Tab.Screen name="WeeklyGrowth" component={WeeklyGrowth} options={({navigation, route})=> ({
+        title: 'Weekly Development',
+        headerShown: true,
+        tabBarItemStyle: {display: 'none'},
+        tabBarStyle: {display: 'none'},
+        headerLeft: () => <BackArrow />,
+      })} />
+      <Tab.Screen name="Milestone1" component={Milestone1} options={({navigation, route})=> ({
+        title: 'Milestone Details',
+        headerShown: true,
+        tabBarItemStyle: {display: 'none'},
+        tabBarStyle: {display: 'none'},
+        headerLeft: () => <BackArrow />,
+      })} />
 
       <Tab.Screen
         name="ExploreArticle"
@@ -158,6 +144,22 @@ const BottomNavigation = () => {
           headerLeft: () => <BackArrow />,
         })}
       />
+
+     <Tab.Screen name="Emergency" component={Emergency} options={({navigation, route})=> ({
+        title: 'Emergency Trigger',
+        headerShown: true,
+        tabBarItemStyle: {display: 'none'},
+        tabBarStyle: {display: 'none'},
+        headerLeft: () => <BackArrow />,
+      })} />
+
+<Tab.Screen name="ScheduleAppointment" component={ScheduleAppointment} options={({navigation, route})=> ({
+        title: 'Schedule Appointment',
+        headerShown: true,
+        tabBarItemStyle: {display: 'none'},
+        tabBarStyle: {display: 'none'},
+        headerLeft: () => <BackArrow />,
+      })} />
 
 
       <Tab.Screen

@@ -27,10 +27,13 @@ export const RoundInputField = ({
   }
   return (
     <View style={container}>
-      <Text style={{ fontSize: typography.default, fontFamily: typography.medium, marginBottom: 12 }}>{label}</Text>
+      {
+        label && <Text style={{ fontFamily: typography.semiBold, fontSize: 16, marginBottom: 12 }}>{label}</Text>
+      }
       <Input
         inputStyle={styles.inputStyle}
         placeholder={placeholder}
+        style={{ fontFamily: typography.semiBold}}
         onFocus={() => {
           if (onFocus) onFocus();
           setIsFocused(true);
@@ -54,7 +57,7 @@ export const RoundInputField = ({
             type: 'font-awesome',
             name: hidePass ? 'eye-slash' : 'eye',
             size: 18,
-            onPress: () => setHidePass(!hidePass), // Toggle "showPassword" state
+            onPress: () => setHidePass(!hidePass), 
           }
         }
       />
@@ -65,7 +68,7 @@ const styles = StyleSheet.create({
   inputStyle: {
     margin: 0,
     color: 'black',
-    fontSize: typography.small,
+    fontSize: typography.default,
     paddingHorizontal: 0,
   },
   inputContainerStyle: {

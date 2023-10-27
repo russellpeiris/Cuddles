@@ -1,7 +1,7 @@
 // Colors
 export const colors = {
   white: '#FFFFFF',
-  black:'000000',
+  black:'#000000',
   primaryPink: '#9F678C',
   successGreen: '#1ED40E',
   warningYellow: '#EDBE17',
@@ -16,6 +16,7 @@ export const colors = {
   inactiveGray: '#999999',
   disabled: '#c4c4c4',
   emergency: '#FF3838',
+  font: '#363853'
 };
 
 // Typography
@@ -35,5 +36,5 @@ export const typography = {
 export const dimen = {
   default: 16,
   icon: 24,
-  inputBorderRadius: 24
+  inputBorderRadius: 8
 }

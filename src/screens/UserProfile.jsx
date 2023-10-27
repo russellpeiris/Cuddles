@@ -1,45 +1,36 @@
 import { DatePicker, DescInputField, Loader, PrimaryButton, RoundInputField } from '../components';
 import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { validateUpdateForm } from '../utils/errorMessages';
 import { auth, db, setDoc, doc } from '../config/firebase';
 import { useNavigation } from '@react-navigation/native';
 import { colors, dimen, typography } from '../../theme';
-import { useLoader } from '../context/LoaderContext';
+import { useLoader, useUser } from '../context';
 import { getDoc } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
+import { User } from '../models';
+import { DATE_FORMAT, DATE_TYPES } from '../constants';
+import moment from 'moment';
 const UserProfile = () => {
   const navigation = useNavigation();
+  const { getUser, user } = useUser();
   const { isLoading, setIsLoading } = useLoader(() => {
     setIsLoading(true);
   });
   const [isVisible, setIsVisible] = useState({ DOB: false, dueDate: false });
   const [date, setDate] = useState({ DOB: new Date(), dueDate: new Date() });
-  const [error, setError] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phoneNumber: '',
-    emergencyContact: '',
-    dateOfBirth: '',
-    city: '',
-    dueDate: '',
-    height: '',
-    medicalHistory: '',
-  });
-  const [userInfo, setUserInfo] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phoneNumber: '',
-    emergencyContact: '',
-    dateOfBirth: '',
-    city: '',
-    dueDate: '',
-    height: '',
-    medicalHistory: '',
-  });
+  const [error, setError] = useState(new User());
+
+  const [userInfo, setUserInfo] = useState(new User());
+
+  useEffect(() => {
+    if (user) {
+      setUserInfo(user);
+    }
+  }, [user]);
+
   const toggleDatePicker = (type) => {
-    if (type == 'DOB') {
+    if (type == DATE_TYPES.DOB) {
       setIsVisible({ ...isVisible, DOB: !isVisible.DOB });
     } else {
       setIsVisible({ ...isVisible, dueDate: !isVisible.dueDate });
@@ -50,19 +41,19 @@ const UserProfile = () => {
     if (event.type == 'set') {
       const currentDate = selectedDate;
       switch (type) {
-        case 'DOB':
+        case DATE_TYPES.DOB:
           setDate({ ...date, DOB: currentDate });
           if (Platform.OS === 'android') {
             toggleDatePicker(type);
-            setUserInfo({ ...userInfo, dateOfBirth: currentDate.toDateString() });
+            setUserInfo({ ...userInfo, dateOfBirth: moment(currentDate).format(DATE_FORMAT) });
             setError((prevError) => ({ ...prevError, dateOfBirth: '' }));
           }
           break;
-        case 'dueDate':
+        case DATE_TYPES.DUE_DATE:
           setDate({ ...date, dueDate: currentDate });
           if (Platform.OS === 'android') {
             toggleDatePicker(type);
-            setUserInfo({ ...userInfo, dueDate: currentDate.toDateString() });
+            setUserInfo({ ...userInfo, dueDate: moment(currentDate).format(DATE_FORMAT) });
             setError((prevError) => ({ ...prevError, dueDate: '' }));
           }
           break;
@@ -71,49 +62,38 @@ const UserProfile = () => {
       toggleDatePicker(type);
     }
   };
-  const userId = auth.currentUser.uid; // Get the currently logged in user data
-  const updateUser = async () => {
+  const userId = auth.currentUser.uid;
+  const handleUpdate = async () => {
     setIsLoading(true);
+  
     try {
+      const validationError = validateUpdateForm(userInfo);
+  
+      if (validationError) {
+        setError(validationError);
+        setIsLoading(false);
+        return;
+      }
+  
       const userRef = doc(db, 'users', userId);
-
       await setDoc(userRef, userInfo, { merge: true });
+      await getUser(userInfo);
+  
       console.log('User data updated successfully');
+      navigation.goBack();
     } catch (error) {
       error && setIsLoading(false);
       console.error('Error updating user data:', error);
     } finally {
       setIsLoading(false);
-      navigation.goBack();
     }
   };
-
-  useEffect(() => {
-    setIsLoading(true);
-    const userRef = doc(db, 'users', userId);
-
-    const fetchUserData = async () => {
-      try {
-        const documentSnapshot = await getDoc(userRef);
-
-        if (documentSnapshot.exists()) {
-          const data = documentSnapshot.data();
-          setUserInfo((prevUserInfo) => ({ ...prevUserInfo, ...data }));
-        }
-      } catch (error) {
-        console.error('Error fetching user data: ', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchUserData();
-  }, []);
+  
 
   return (
     <>
       <GestureHandlerRootView style={styles.container}>
-        <ScrollView >
+        <ScrollView>
           <View style={styles.formContainer}>
             <Text
               style={{
@@ -181,7 +161,7 @@ const UserProfile = () => {
                   onBlur={() => {}}
                   width="47%"
                   label="Phone Number"
-                  placeholder="07X-XXX-XXXX"
+                  placeholder="070 123 1234"
                 />
                 <RoundInputField
                   value={userInfo.emergencyContact}
@@ -194,7 +174,7 @@ const UserProfile = () => {
                   onBlur={() => {}}
                   width="47%"
                   label="Emergency Contact"
-                  placeholder="07X-XXX-XXXX"
+                  placeholder="070 123 1234"
                 />
               </View>
               <View
@@ -206,18 +186,18 @@ const UserProfile = () => {
                     display="spinner"
                     value={date.DOB}
                     onChange={(event, selectedDate, type) => {
-                      handlePicker(event, selectedDate, (type = 'DOB'));
+                      handlePicker(event, selectedDate, (type = DATE_TYPES.DOB));
                     }}
                   />
                 )}
                 <Pressable
                   style={{ margin: 0, padding: 0, width: '47%' }}
-                  onPress={() => toggleDatePicker('DOB')}
+                  onPress={() => toggleDatePicker(DATE_TYPES.DOB)}
                 >
                   <RoundInputField
                     value={userInfo.dateOfBirth}
                     onChangeText={(value) => {
-                      setUserInfo({ ...userInfo, dateOfBirth: value.toDateString() });
+                      setUserInfo({ ...userInfo, dateOfBirth: moment(value).format(DATE_FORMAT) });
                       setDate(new Date(value));
                       setError((prevError) => ({ ...prevError, dateOfBirth: '' }));
                     }}
@@ -226,7 +206,7 @@ const UserProfile = () => {
                     onBlur={() => {}}
                     width="100%"
                     label="Date of Birth"
-                    placeholder="DD MMM YYYY"
+                    placeholder={DATE_FORMAT}
                     editable={false}
                   />
                 </Pressable>
@@ -253,18 +233,18 @@ const UserProfile = () => {
                     display="spinner"
                     value={date.dueDate}
                     onChange={(event, selectedDate, type) => {
-                      handlePicker(event, selectedDate, (type = 'dueDate'));
+                      handlePicker(event, selectedDate, (type = DATE_TYPES.DUE_DATE));
                     }}
                   />
                 )}
                 <Pressable
                   style={{ margin: 0, padding: 0, width: '47%' }}
-                  onPress={() => toggleDatePicker('dueDate')}
+                  onPress={() => toggleDatePicker(DATE_TYPES.DUE_DATE)}
                 >
                   <RoundInputField
                     value={userInfo.dueDate}
                     onChangeText={(value) => {
-                      setUserInfo({ ...userInfo, dueDate: value.toDateString() });
+                      setUserInfo({ ...userInfo, dueDate: moment(value).format(DATE_FORMAT) });
                       setDate(new Date(value));
                       setError((prevError) => ({ ...prevError, dueDate: '' }));
                     }}
@@ -273,7 +253,7 @@ const UserProfile = () => {
                     onBlur={() => {}}
                     width="100%"
                     label="Expected due date"
-                    placeholder="DD MMM YYYY"
+                    placeholder={DATE_FORMAT}
                     editable={false}
                   />
                 </Pressable>
@@ -307,7 +287,7 @@ const UserProfile = () => {
                 textAlignVertical={'top'}
               />
             </View>
-            <PrimaryButton text="Save" onPress={updateUser} />
+            <PrimaryButton text="Save" onPress={handleUpdate} />
           </View>
         </ScrollView>
       </GestureHandlerRootView>
@@ -326,7 +306,7 @@ const styles = StyleSheet.create({
   formContainer: {
     margin: dimen.default,
     padding: dimen.default,
-    borderColor: colors.borderGray, 
+    borderColor: colors.borderGray,
     borderWidth: 1,
     borderRadius: 10,
   },

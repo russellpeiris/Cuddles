@@ -6,20 +6,50 @@ import { useNavigation } from '@react-navigation/native';
 import { colors, dimen, typography } from '../../theme';
 import { StyleSheet, Text, View } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useLoader, useUser } from '../context';
+import { auth, db, setDoc, doc } from '../config/firebase';
+import { getDoc } from 'firebase/firestore';
+import { AddIcon } from '../assets/icons';
+import { article } from '../utils/weeklyArticles';
 
 const Home = () => {
+  
   const navigation = useNavigation();
+  const { getUser, user } = useUser();
+
+  const { isLoading, setIsLoading } = useLoader(() => {
+    setIsLoading(true);
+  });
   const handlePress = () => {
-    // Navigate to the 'DailyInsights' screen
     navigation.navigate('DailyInsights');
   };
 
   const handleArticleCardPress = () => {
-    // Navigate to the 'Article' screen
-    navigation.navigate('Article');
+    navigation.navigate('Article', { articleData: article[9] });
   };
-
+  const userId = auth.currentUser.uid; 
+    useEffect(() => {
+      setIsLoading(true);
+      const userRef = doc(db, 'users', userId);
+  
+      const fetchUserData = async () => {
+        try {
+          const documentSnapshot = await getDoc(userRef);
+  
+          if (documentSnapshot.exists()) {
+            const data = documentSnapshot.data();
+            getUser(data);
+          }
+        } catch (error) {
+          console.error('Error fetching user data: ', error);
+        } finally {
+          setIsLoading(false);
+        }
+      };
+  
+      fetchUserData();
+    }, []);
   return (
     <SafeAreaView>
       <GestureHandlerRootView style={styles.container}>
@@ -27,35 +57,37 @@ const Home = () => {
           <View style={{ padding: 16 }}>
             <View>
               <View style={styles.header}>
-                <Text style={styles.greeting}>Hello Samantha!</Text>
+                <Text style={styles.greeting}>Hello {user && user.firstName}!</Text>
                 <FontAwesome5 name="bell" size={24} color="black" />
               </View>
               <View></View>
-              <Text style={styles.weekText}>Week 1</Text>
+              <Text style={styles.weekText}>Current Week</Text>
             </View>
             <DateSlider />
             <TouchableOpacity onPress={handleArticleCardPress}>
               <View style={{ paddingTop: 16 }}>
                 <ArticleCard
-                  title="title"
+                  title="Article Title"
                   content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel libero nec nunc viverra posuere. Fusce euismod ex sit amet quam tincidunt, sed convallis eros varius. Proin euismod metus quis justo malesuada,Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel libero nec nunc viverra posuere. Fusce euismod ex sit amet quam tincidunt, sed convallis eros varius. Proin euismod metus quis justo malesuada,  "
-                  imageUrl={'https://i.imgur.com/UYiroysl.jpg'}
+                  imageUrl={'https://assets.babycenter.com/ims/2015/01/pregnancy-week-10-fingernails_4x3.jpg?width=722'}
                 />
               </View>
             </TouchableOpacity>
             <View style={styles.insightsContainer}>
-              <Text style={styles.subTop}>My Daily Insights</Text>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <Text style={styles.weekText}>My Daily Insights</Text>
+              <TouchableOpacity onPress={handlePress}>
+                <AddIcon />
+              </TouchableOpacity>
+              </View>
               <View style={styles.insights}>
-                <TouchableOpacity onPress={handlePress}>
-                  <InsightCard title={null} />
-                </TouchableOpacity>
                 <InsightCard title="Mood" value="happy" />
                 <InsightCard title="BMI" value="18.5" />
                 <InsightCard title="BP" value="110/68" />
               </View>
             </View>
             <View>
-              <Text style={styles.subTop}>Upcoming Appointments</Text>
+              <Text style={styles.weekText}>Upcoming Appointments</Text>
               <View style={styles.appointments}>
                 <AppointmentCard />
               </View>
@@ -86,6 +118,7 @@ const styles = StyleSheet.create({
     fontFamily: typography.bold,
     fontSize: typography.subTitle,
     paddingVertical: dimen.default,
+    marginRight: 16,
   },
   greeting: {
     fontFamily: typography.semiBold,
@@ -93,7 +126,7 @@ const styles = StyleSheet.create({
   },
   subTop: {
     fontFamily: typography.semiBold,
-    fontSize: typography.default,
+    fontSize: typography.authSubTitle,
   },
   insightsContainer: {
     paddingVertical: 28,
@@ -103,7 +136,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingTop: 16,
+    paddingTop: 8,
+    // backgroundColor: 'aqua'
   },
   appointments: {
     paddingTop: 16,

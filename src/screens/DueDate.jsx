@@ -1,71 +1,157 @@
-import React from 'react'
-import { StyleSheet, View, Text } from 'react-native'
-import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler'
-import { colors, dimen, typography } from '../../theme'
-import { MenuButtons, PrimaryButton, RoundInputField } from '../components'
+import {
+  DatePicker,
+  DropDown,
+  PrimaryButton,
+  RoundInputField,
+} from '../components';
+import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler';
+import { StyleSheet, View, Text, Pressable } from 'react-native';
+import { colors, dimen, typography } from '../../theme';
+import React, { useState } from 'react';
+import moment from 'moment';
+import { DATE_FORMAT } from '../constants';
 
 const DueDate = () => {
-  return (
-    <>
-    <GestureHandlerRootView style={styles.container}>
-       <ScrollView>
-           <View style={styles.formConatainer}>
-              <Text
-                 style={{
-                    fontSize: typography.subTitle,
-                    fontFamily: typography.semiBold,
-                    marginBottom: 12,
-                  }}
-                >
-                 Set your due date
-               </Text>
-            <View>
-               <RoundInputField
-                  onBlur={() => {}}
-                  width="100%"
-                  label="Estimate my due date based on"
-                  placeholder="Select an option"
-                />
-            </View>
-            <View>
-               <RoundInputField
-                  onBlur={() => {}}
-                  width="100%"
-                  label="Due date"
-                  placeholder="Estimated due date"
-                />
-            </View>
-            <View>
-               <PrimaryButton text="Continue"/>
-            </View>
-            <View style={styles.buttonGap}>
-               <MenuButtons text="Select Later" bgColor={colors.white} bdColour={colors.primaryPink} />
-            </View>
-           </View>
-       </ScrollView>
-    </GestureHandlerRootView> 
-       
-    </>
-  
-  )
-}
+  const [inputs, setInputs] = useState({
+    dueDate: '',
+  });
+  const [date, setDate] = useState(new Date());
+  const [estimatedDueDate, setEstimatedDueDate] = useState(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const [typeOpen, setTypeOpen] = useState(false);
+  const [typeValue, setTypeValue] = useState(null);
+  const [types, setTypes] = useState([
+    { label: 'Last Menstrual Period', value: 'last menstrual period' },
+    { label: 'Ultrasound Scan', value: 'ultrasound scan' },
+  ]);
 
-export default DueDate
+  const toggleDatePicker = () => {
+    setIsVisible(!isVisible);
+  };
+
+  const handlePicker = (event, selectedDate) => {
+    if (event.type == 'set') {
+      const currentDate = selectedDate;
+      setDate(currentDate);
+
+      if (Platform.OS === 'android') {
+        toggleDatePicker();
+        setInputs({ ...inputs, dueDate: moment(currentDate).format(DATE_FORMAT) });
+        // setError((prevError) => ({ ...prevError, dueDate: '' }));
+      }
+    } else {
+      toggleDatePicker();
+    }
+  };
+
+  const calculateDueDate = () => {
+    if (inputs.dueDate) {
+      formattedDate = moment(inputs.dueDate ,DATE_FORMAT);
+      formattedDate.add(280, 'days');
+      const calDate = formattedDate.format(DATE_FORMAT);
+      setEstimatedDueDate(calDate);
+    }
+  };
+
+  return (
+    <GestureHandlerRootView style={styles.container}>
+      <View style={styles.formContainer}>
+        <Text
+          style={{
+            fontSize: typography.subTitle,
+            fontFamily: typography.semiBold,
+            marginBottom: 12,
+          }}
+        >
+          Set your due date
+        </Text>
+        <View style={{ width: '100%' }}>
+          <DropDown
+            width="100%"
+            label="Estimate my due date based on"
+            open={typeOpen}
+            value={typeValue}
+            items={types}
+            setOpen={setTypeOpen}
+            setValue={setTypeValue}
+            setItems={setTypes}
+            placeholder="Select an option"
+            zIndex={3000}
+            zIndexInverse={1000}
+          />
+        </View>
+        <View>
+          {isVisible && (
+            <DatePicker mode="date" display="spinner" value={date} onChange={handlePicker} />
+          )}
+          <Pressable style={{ margin: 0, padding: 0, width: '100%' }} onPress={toggleDatePicker}>
+            <RoundInputField
+              value={inputs.dueDate}
+              onChangeText={(value) => {
+                      setInputs({ ...inputs, dueDate: moment(value).format(DATE_FORMAT) });
+                      setDate(new Date(value));
+                    }}
+                    type={'text'}
+                    onBlur={() => {}}
+                    width="100%"
+                    label="First day of last period"
+                    placeholder="DD-MM-YYYY"
+                    editable={false}
+                  />
+                </Pressable>
+        </View>
+        {estimatedDueDate ? (
+          <>
+            <RoundInputField
+              value={estimatedDueDate}
+              onChangeText={(value) => {
+                setInputs({ ...inputs, dueDate: moment(value).format(DATE_FORMAT) });
+              }}
+              type={'text'}
+              onBlur={() => {}}
+              width="100%"
+              label="Estimated Due Date"
+              placeholder="DD-MM-YYYY"
+              editable={false}
+            />
+            <View>
+              <Text style={{ fontFamily: typography.regular, color: colors.descriptionGray }}>
+                Please note that this is an estimated due date. Make sure to check it with your
+                doctor on your next appointment.
+              </Text>
+            </View>
+          </>
+        ): null}
+        <View style={{}}>
+          <PrimaryButton text="Calculate" onPress={calculateDueDate} />
+        </View>
+      </View>
+    </GestureHandlerRootView>
+  );
+};
+
+export default DueDate;
 
 const styles = StyleSheet.create({
-    container : {
-        flex: 1,
-        backgroundColor: 'white',
-        height: '100%'
-    },
-    formConatainer:{
-        margin: dimen.default,
-        padding: dimen.default,
-        borderColor: colors.borderGray,
-        borderWidth: 1,
-        borderRadius: 10,
-    },
-    buttonGap:{
-      marginTop:16,
-    }
-})
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+    padding: dimen.default,
+    height: '100%',
+  },
+  formContainer: {
+    padding: dimen.default,
+    borderColor: colors.borderGray,
+    borderWidth: 1,
+    borderRadius: 10,
+  },
+  display: {
+    borderColor: colors.borderGray,
+    borderWidth: 1,
+    borderRadius: 10,
+    padding: 20,
+    marginTop: dimen.default,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
