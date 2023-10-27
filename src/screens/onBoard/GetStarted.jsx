@@ -1,7 +1,7 @@
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import React from 'react';
-
+import { PrimaryButton } from '../../components';
+import {dimen} from '../../../theme.js'
 
 const GetStarted = () => {
 
@@ -14,9 +14,10 @@ const GetStarted = () => {
   return (
     <View style={styles.container}>
       <Image source={require('../../assets/illustrations/GetStarted.png')} style={styles.image} />
-      <TouchableOpacity style={styles.button} onPress={handleGetStarted}>
-        <Text style={styles.buttonText}>Get Started</Text>
-      </TouchableOpacity>
+        <PrimaryButton
+          text="Get Started"
+          onPress={handleGetStarted}
+        />
     </View>
   );
 };
@@ -27,6 +28,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     justifyContent: 'center',
     alignItems: 'center',
+    padding: dimen.default,
   },
   image: {
     width: 350,

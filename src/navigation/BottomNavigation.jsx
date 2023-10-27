@@ -1,6 +1,5 @@
-import { DailyInsights, Doctors, Home, Menu, Milestone1, Milestones, UserProfile, WeeklyGrowth, ExploreArticle, Explore, Article, GetStarted, Splash} from '../screens';
+import { DailyInsights, Doctors, Home, Menu, Milestone1, Milestones, UserProfile, WeeklyGrowth, ExploreArticle, Explore, Article, GetStarted, Splash, Emergency} from '../screens';
 import { MenuIcon, HomeIcon, AvatarIcon, DoctorIcon } from '../assets/icons';
-import { DailyInsights, Doctors, Home, Menu, Milestone1, Milestones, UserProfile, WeeklyGrowth, ExploreArticle, Explore, Article, Emergency } from '../screens';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { BottomTabBar } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
