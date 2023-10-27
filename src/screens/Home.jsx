@@ -11,6 +11,7 @@ import { useLoader, useUser } from '../context';
 import { auth, db, setDoc, doc } from '../config/firebase';
 import { getDoc } from 'firebase/firestore';
 import { AddIcon } from '../assets/icons';
+import { article } from '../utils/weeklyArticles';
 
 const Home = () => {
   
@@ -25,7 +26,7 @@ const Home = () => {
   };
 
   const handleArticleCardPress = () => {
-    navigation.navigate('Article');
+    navigation.navigate('Article', { articleData: article[9] });
   };
   const userId = auth.currentUser.uid; 
     useEffect(() => {
@@ -68,7 +69,7 @@ const Home = () => {
                 <ArticleCard
                   title="Article Title"
                   content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel libero nec nunc viverra posuere. Fusce euismod ex sit amet quam tincidunt, sed convallis eros varius. Proin euismod metus quis justo malesuada,Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel libero nec nunc viverra posuere. Fusce euismod ex sit amet quam tincidunt, sed convallis eros varius. Proin euismod metus quis justo malesuada,  "
-                  imageUrl={'https://i.imgur.com/UYiroysl.jpg'}
+                  imageUrl={'https://assets.babycenter.com/ims/2015/01/pregnancy-week-10-fingernails_4x3.jpg?width=722'}
                 />
               </View>
             </TouchableOpacity>
