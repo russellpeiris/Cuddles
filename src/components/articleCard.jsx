@@ -41,12 +41,12 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   title: {
-    fontSize: typography.default,
+    fontSize: 20,
     fontFamily: typography.semiBold,
-    paddingBottom: 8,
+    // paddingBottom: 8,
   },
   content: {
-    fontSize: typography.small,
+    fontSize: typography.default,
     fontFamily: typography.medium,
   },
   image: {

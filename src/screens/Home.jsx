@@ -10,6 +10,7 @@ import React, { useEffect } from 'react';
 import { useLoader, useUser } from '../context';
 import { auth, db, setDoc, doc } from '../config/firebase';
 import { getDoc } from 'firebase/firestore';
+import { AddIcon } from '../assets/icons';
 
 const Home = () => {
   
@@ -65,25 +66,27 @@ const Home = () => {
             <TouchableOpacity onPress={handleArticleCardPress}>
               <View style={{ paddingTop: 16 }}>
                 <ArticleCard
-                  title="title"
+                  title="Article Title"
                   content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel libero nec nunc viverra posuere. Fusce euismod ex sit amet quam tincidunt, sed convallis eros varius. Proin euismod metus quis justo malesuada,Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel libero nec nunc viverra posuere. Fusce euismod ex sit amet quam tincidunt, sed convallis eros varius. Proin euismod metus quis justo malesuada,  "
                   imageUrl={'https://i.imgur.com/UYiroysl.jpg'}
                 />
               </View>
             </TouchableOpacity>
             <View style={styles.insightsContainer}>
-              <Text style={styles.subTop}>My Daily Insights</Text>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <Text style={styles.weekText}>My Daily Insights</Text>
+              <TouchableOpacity onPress={handlePress}>
+                <AddIcon />
+              </TouchableOpacity>
+              </View>
               <View style={styles.insights}>
-                <TouchableOpacity onPress={handlePress}>
-                  <InsightCard title={null} />
-                </TouchableOpacity>
                 <InsightCard title="Mood" value="happy" />
                 <InsightCard title="BMI" value="18.5" />
                 <InsightCard title="BP" value="110/68" />
               </View>
             </View>
             <View>
-              <Text style={styles.subTop}>Upcoming Appointments</Text>
+              <Text style={styles.weekText}>Upcoming Appointments</Text>
               <View style={styles.appointments}>
                 <AppointmentCard />
               </View>
@@ -114,6 +117,7 @@ const styles = StyleSheet.create({
     fontFamily: typography.bold,
     fontSize: typography.subTitle,
     paddingVertical: dimen.default,
+    marginRight: 16,
   },
   greeting: {
     fontFamily: typography.semiBold,
@@ -121,7 +125,7 @@ const styles = StyleSheet.create({
   },
   subTop: {
     fontFamily: typography.semiBold,
-    fontSize: typography.default,
+    fontSize: typography.authSubTitle,
   },
   insightsContainer: {
     paddingVertical: 28,
@@ -131,7 +135,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingTop: 16,
+    paddingTop: 8,
+    // backgroundColor: 'aqua'
   },
   appointments: {
     paddingTop: 16,

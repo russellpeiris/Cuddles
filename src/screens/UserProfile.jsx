@@ -161,7 +161,7 @@ const UserProfile = () => {
                   onBlur={() => {}}
                   width="47%"
                   label="Phone Number"
-                  placeholder="07X-XXX-XXXX"
+                  placeholder="070 123 1234"
                 />
                 <RoundInputField
                   value={userInfo.emergencyContact}
@@ -174,7 +174,7 @@ const UserProfile = () => {
                   onBlur={() => {}}
                   width="47%"
                   label="Emergency Contact"
-                  placeholder="07X-XXX-XXXX"
+                  placeholder="070 123 1234"
                 />
               </View>
               <View
