@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
   dropdown: {
     borderColor: colors.borderGray,
     borderWidth: 1,
-    borderRadius: 24,
+    borderRadius: dimen.inputBorderRadius,
     height: 50,
   },
   placeholderStyles: {

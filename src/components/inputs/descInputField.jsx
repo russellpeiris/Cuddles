@@ -1,7 +1,7 @@
 import { StyleSheet, View } from 'react-native';
 import { Input, Text } from '@rneui/themed';
 import { useState } from 'react';
-import { colors, typography } from '../../../theme';
+import { colors, dimen, typography } from '../../../theme';
 export const DescInputField = ({
   placeholder,
   value,
@@ -69,14 +69,14 @@ const styles = StyleSheet.create({
     margin: 0,
     color: 'black',
     paddingHorizontal: 0,
-    fontSize: 14,
+    fontSize: dimen.default,
+    fontFamily: typography.medium,
     height: '100%',
   },
   inputContainerStyle: {
     width: '100%',
     margin: 0,
     borderRadius: 8,
-    fontSize: 14,
     borderWidth: 1,
     maxWidth: '100%',
     borderColor: colors.borderGray,
