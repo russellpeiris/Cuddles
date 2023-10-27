@@ -1,27 +1,34 @@
-import { DatePicker, DropDown, InputField, MenuButtons, PrimaryButton, RoundInputField } from '../components';
-import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler'
-import { colors, dimen, typography } from '../../theme';
+import {
+  DatePicker,
+  DropDown,
+  PrimaryButton,
+  RoundInputField,
+} from '../components';
+import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler';
 import { StyleSheet, View, Text, Pressable } from 'react-native';
+import { colors, dimen, typography } from '../../theme';
 import React, { useState } from 'react';
+import moment from 'moment';
+import { DATE_FORMAT } from '../constants';
 
 const DueDate = () => {
-  const[inputs, setInputs] = useState({
-    dueDate:'',
-  })
+  const [inputs, setInputs] = useState({
+    dueDate: '',
+  });
   const [date, setDate] = useState(new Date());
-  const[estimatedDueDate, setEstimatedDueDate] = useState(null);
+  const [estimatedDueDate, setEstimatedDueDate] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
-  const[typeOpen, setTypeOpen] = useState(false);
-  const[typeValue, setTypeValue] = useState(null);
+  const [typeOpen, setTypeOpen] = useState(false);
+  const [typeValue, setTypeValue] = useState(null);
   const [types, setTypes] = useState([
-    {label:'Last Menstrual Period', value:'last menstrual period'},
-    {label:'Ultrasound Scan', value:'ultrasound scan'}
-  ])
+    { label: 'Last Menstrual Period', value: 'last menstrual period' },
+    { label: 'Ultrasound Scan', value: 'ultrasound scan' },
+  ]);
 
   const toggleDatePicker = () => {
     setIsVisible(!isVisible);
   };
-  
+
   const handlePicker = (event, selectedDate) => {
     if (event.type == 'set') {
       const currentDate = selectedDate;
@@ -29,8 +36,8 @@ const DueDate = () => {
 
       if (Platform.OS === 'android') {
         toggleDatePicker();
-        setInputs({ ...inputs, dueDate: currentDate.toDateString() });
-       // setError((prevError) => ({ ...prevError, dueDate: '' }));
+        setInputs({ ...inputs, dueDate: moment(currentDate).format(DATE_FORMAT) });
+        // setError((prevError) => ({ ...prevError, dueDate: '' }));
       }
     } else {
       toggleDatePicker();
@@ -39,10 +46,10 @@ const DueDate = () => {
 
   const calculateDueDate = () => {
     if (inputs.dueDate) {
-      const selectedDate = new Date(inputs.dueDate);
-      const estimatedDueDate = new Date(selectedDate);
-      estimatedDueDate.setDate(estimatedDueDate.getDate() + 7 * 40); // Adding 40 weeks
-      setEstimatedDueDate(estimatedDueDate);
+      formattedDate = moment(inputs.dueDate ,DATE_FORMAT);
+      formattedDate.add(280, 'days');
+      const calDate = formattedDate.format(DATE_FORMAT);
+      setEstimatedDueDate(calDate);
     }
   };
 
@@ -58,8 +65,9 @@ const DueDate = () => {
         >
           Set your due date
         </Text>
-        <View style={{width:'100%'}}>
+        <View style={{ width: '100%' }}>
           <DropDown
+            width="100%"
             label="Estimate my due date based on"
             open={typeOpen}
             value={typeValue}
@@ -73,42 +81,48 @@ const DueDate = () => {
           />
         </View>
         <View>
-           {isVisible && (
-                <DatePicker mode="date" display="spinner" value={date} onChange={handlePicker} />
-              )}
-                <Pressable
-                  style={{ margin: 0, padding: 0, width: '100%'}}
-                  onPress={toggleDatePicker}
-                >
-                  <RoundInputField
-                    value={inputs.dueDate}
-                    onChangeText={(value) => {
-                      setInputs({ ...inputs, dueDate: value.toDateString() });
+          {isVisible && (
+            <DatePicker mode="date" display="spinner" value={date} onChange={handlePicker} />
+          )}
+          <Pressable style={{ margin: 0, padding: 0, width: '100%' }} onPress={toggleDatePicker}>
+            <RoundInputField
+              value={inputs.dueDate}
+              onChangeText={(value) => {
+                      setInputs({ ...inputs, dueDate: moment(value).format(DATE_FORMAT) });
                       setDate(new Date(value));
                     }}
                     type={'text'}
                     onBlur={() => {}}
                     width="100%"
                     label="First day of last period"
-                    placeholder="DD MMM YYYY"
+                    placeholder="DD-MM-YYYY"
                     editable={false}
                   />
                 </Pressable>
         </View>
-        <Text style={{ fontFamily: typography.semiBold,fontSize:typography.default, color: colors.black,marginTop:16}}>
-             Estimated Due Date
-            </Text>
-         <View style={styles.display}>
-            <Text style={{ fontFamily: typography.bold, fontSize:typography.default, color: colors.primaryPink }}>
-            {estimatedDueDate ? estimatedDueDate.toDateString() : 'Estimated due date will be displayed here'}
-           </Text>
-         </View>
-         <View>
-          <Text style={{ fontFamily: typography.regular, color: colors.descriptionGray }}>
-             Please note that this is an estimated due date. Make sure to check it with your doctor on your next appointment.
-          </Text>
-         </View>
-         <View style={{marginTop:40}}>
+        {estimatedDueDate ? (
+          <>
+            <RoundInputField
+              value={estimatedDueDate}
+              onChangeText={(value) => {
+                setInputs({ ...inputs, dueDate: moment(value).format(DATE_FORMAT) });
+              }}
+              type={'text'}
+              onBlur={() => {}}
+              width="100%"
+              label="Estimated Due Date"
+              placeholder="DD-MM-YYYY"
+              editable={false}
+            />
+            <View>
+              <Text style={{ fontFamily: typography.regular, color: colors.descriptionGray }}>
+                Please note that this is an estimated due date. Make sure to check it with your
+                doctor on your next appointment.
+              </Text>
+            </View>
+          </>
+        ): null}
+        <View style={{}}>
           <PrimaryButton text="Calculate" onPress={calculateDueDate} />
         </View>
       </View>
@@ -137,7 +151,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     padding: 20,
-    marginTop:dimen.default,
+    marginTop: dimen.default,
     justifyContent: 'center',
     alignItems: 'center',
   },
