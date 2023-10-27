@@ -57,7 +57,7 @@ export const article = [
         content: "Baby’s head has straightened out is more fully developed and ears are continuing to grow.\n\n"+
                 "Toes are visible, and all of baby’s essential organs, like the heart, brain, kidneys, liver, and lungs, have begun to develop.\n\n"+
                  "There’s exciting news this week: It’s possible to hear something this week!\n\n"+
-                 " Your baby’s heart is developed enough and has grown large enough for cardiac activity to be heard!\n\n"+
+                 "Your baby’s heart is developed enough and has grown large enough for cardiac activity to be heard!\n\n"+
                  "Fetal cardiac activity might be audible on a Doppler device at your doctor’s appointment this week! ",
         imageUrl: "https://assets.babycenter.com/ims/2015/01/pregnancy-week-9-finger-touch-pads.jpg?width=722"
     },
@@ -65,7 +65,7 @@ export const article = [
         id:10,
         title: "Week 10",
         content: "Congratulations! Your baby has officially graduated this week from embryo to fetus.\n\n"+
-                " Your baby is really taking a human shape now. Bones are forming and small indentations on the legs are developing into knees and ankles. The arms, complete with elbows and can flex already.\n\n"+
+            "Your baby is really taking a human shape now. Bones are forming and small indentations on the legs are developing into knees and ankles. The arms, complete with elbows and can flex already.\n\n"+
                 "Other systems are a go too, your baby’s stomach is producing digestive juices, the kidneys are producing larger quantities of urine.",
         imageUrl: "https://assets.babycenter.com/ims/2015/01/pregnancy-week-10-fingernails_4x3.jpg?width=722"
     },
