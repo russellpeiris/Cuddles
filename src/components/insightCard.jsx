@@ -5,68 +5,59 @@ import { Image } from 'react-native';
 import React from 'react';
 
 export const InsightCard = ({ title, value, icon }) => {
+  const container = {
+    display: 'flex',
+    flexDirection: 'column',
+    borderWidth: 1,
+    borderColor: colors.borderGray,
+    borderRadius: 10,
+    height: 'auto',
+    width: '30%',
+    height: '100%'
+  };
+
   if (title === 'Mood') {
     switch (value) {
       case 'happy':
         icon = '😁';
         break;
     }
+  } else if (title === null) {
+    icon = <AddIcon />;
   }
+
   return (
-    <View style={title ? styles.container : styles.addContainer}>
-      {title ? (
-        <View style={styles.textHolder}>
-          <Text style={styles.title}>{title}</Text>
-          {icon ? (
-            <Text style={styles.emoji}>{icon}</Text>
-          ) : (
-            <Text style={styles.text}>{value}</Text>
-          )}
-        </View>
-      ) : (
+    <View style={container}>
+      {/* {title ? ( */}
+      <View style={styles.textHolder}>
+        <Text style={styles.title}>{title}</Text>
+        {icon ? <Text style={styles.emoji}>{icon}</Text> : <Text style={styles.text}>{value}</Text>}
+      </View>
+      {/* ) : (
         <AddIcon />
-      )}
+      )} */}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
-    borderWidth: 1,
-    borderColor: colors.borderGray,
-    borderRadius: 10,
-    height: 99,
-    width: 78,
-  },
   textHolder: {
-    marginTop: 16,
+    marginVertical: '10%',
     alignItems: 'center',
     justifyContent: 'center',
+    // backgroundColor: 'aqua',
     gap: 5,
   },
   title: {
-    fontSize: typography.small,
+    fontSize: typography.default,
     fontFamily: typography.semiBold,
   },
   text: {
-    fontSize: typography.default,
+    fontSize: typography.subTitle,
     fontFamily: typography.semiBold,
   },
   emoji: {
     fontSize: 28,
     fontFamily: typography.semiBold,
-  },
-  addContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    borderWidth: 1,
-    borderColor: colors.borderGray,
-    borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 99,
-    width: 78,
-  },
+  }
 });

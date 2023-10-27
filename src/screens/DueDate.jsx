@@ -176,7 +176,6 @@ const styles = StyleSheet.create({
     borderColor: colors.borderGray,
     borderWidth: 1,
     borderRadius: 10,
-    height: '100%',
   },
   display: {
     borderColor: colors.borderGray,

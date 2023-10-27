@@ -36,5 +36,5 @@ export const typography = {
 export const dimen = {
   default: 16,
   icon: 24,
-  inputBorderRadius: 24
+  inputBorderRadius: 8
 }

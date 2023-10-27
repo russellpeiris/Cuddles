@@ -81,24 +81,27 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 1,
-    width: 51,
-    height: 66,
+    width: '18%',
+    height: '95%',
     borderColor: colors.borderGray,
     borderRadius: 11,
+    paddingVertical: '2%'
   },
   dayText: {
     fontFamily: typography.bold,
     color: colors.inactiveGray,
+    fontSize: typography.default,
   },
   today: {
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    width: 55,
-    height: 70,
+    width: '18%',
+    height: '100%',
     borderRadius: 11,
     backgroundColor: colors.primaryPink,
     elevation: 10,
+    paddingVertical: '2%'
   },
   todayText: {
     color: 'white',

@@ -25,10 +25,10 @@ export const AppointmentCard = ({ docName, docTitle, location, dayAndTime }) => 
     </View>
   ) : (
     <View style={styles.empty}>
-      <Text style={{ fontFamily: typography.semiBold, color: colors.disabled }}>
+      <Text style={{ fontFamily: typography.semiBold, color: colors.disabled, fontSize: typography.default }}>
         No upcoming appointments.
       </Text>
-      <Text style={{ fontFamily: typography.regular, color: colors.disabled }}>
+      <Text style={{ fontFamily: typography.regular, color: colors.disabled, fontSize: typography.default, textAlign: 'center' }}>
         Once you make an Appointment it will be here
       </Text>
     </View>
