@@ -1,5 +1,5 @@
+import { DailyInsights, Doctors, Home, Menu, Milestone1, Milestones, UserProfile, WeeklyGrowth, ExploreArticle, Explore, Article, GetStarted, Splash, Emergency} from '../screens';
 import { MenuIcon, HomeIcon, AvatarIcon, DoctorIcon } from '../assets/icons';
-import { DailyInsights, Doctors, Home, Menu, Milestone1, Milestones, UserProfile, WeeklyGrowth, ExploreArticle, Explore, Article, Emergency } from '../screens';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { BottomTabBar } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
@@ -68,7 +68,7 @@ const BottomNavigation = () => {
           headerLeft: () => <BackArrow />,
         })}
       />
-            <Tab.Screen
+      <Tab.Screen
         name="DailyInsights"
         component={DailyInsights}
         options={({ navigation, route }) => ({
@@ -130,9 +130,9 @@ const BottomNavigation = () => {
           tabBarStyle: { display: 'none' },
           headerLeft: () => <BackArrow />,
         })}
-        />
+      />
 
-        <Tab.Screen
+      <Tab.Screen
         name="Article"
         component={Article}
         options={({ navigation, route }) => ({
@@ -160,8 +160,31 @@ const BottomNavigation = () => {
         headerLeft: () => <BackArrow />,
       })} />
 
+
+      <Tab.Screen
+        name="GetStarted"
+        component={GetStarted}
+        options={({ navigation, route }) => ({
+          title: 'GetStarted',
+          headerShown: false,
+          tabBarItemStyle: { display: 'none' },
+          tabBarStyle: { display: 'none' },
+          headerLeft: () => <BackArrow />,
+        })}
+      />
+
+      <Tab.Screen
+        name="Splash"
+        component={Splash}
+        options={({ navigation, route }) => ({
+          title: 'Splash',
+          headerShown: false,
+          tabBarItemStyle: { display: 'none' },
+          tabBarStyle: { display: 'none' },
+          headerLeft: () => <BackArrow />,
+        })}
+      />
     </Tab.Navigator>
-    
   );
 };
 
