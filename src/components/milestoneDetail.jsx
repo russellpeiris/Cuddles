@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, View, Text } from 'react-native'
-import { CheckboxGroup } from './inputs/checkBox'
+import { MilstoneCheckbox } from './inputs/milestoneCheckBox';
 import { colors, typography } from '../../theme'
 import { Image } from '@rneui/base';
 
@@ -17,7 +17,8 @@ export const MilestoneDetail = ({
     length,
     imageURL }) => {
 
-        //const checkBoxes = [scan1, scan2, scan3]
+
+  //const checkBoxes = [scan1, scan2, scan3]
 
   return (
     <View style={styles.container}>
@@ -28,7 +29,7 @@ export const MilestoneDetail = ({
         
         <View>
            <Text style={styles.title2}>{scanTitle}</Text>
-           <CheckboxGroup checkboxLabels={[scan1, scan2, scan3]}/>
+           <MilstoneCheckbox checkboxLabels={[scan1, scan2, scan3]}/>
         </View>
         <View>
             <Text style={styles.title2}>{title2}</Text>
