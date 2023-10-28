@@ -1,20 +1,22 @@
 import React, {useState, useEffect} from 'react'
-import { View, Text, StyleSheet} from 'react-native'
+import { View, Text, StyleSheet, Pressable} from 'react-native'
 import { DescInputField } from './inputs/descInputField'
 import { PrimaryButton } from './buttons/primaryButton'
 import { CheckboxGroup } from './inputs/checkBox'
-import { colors, typography } from '../../theme'
+import { colors, dimen, typography } from '../../theme'
 import { MenuButtons } from './buttons/menuButtons'
 import { db, doc, getDocs, setDoc, auth, collection} from '../config/firebase';
 import {addDoc, serverTimestamp} from 'firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import { useLoader, useUser } from '../context';
 import { User } from '../models';
+import { Modal } from 'react-native'
 
  export const EmergencyTrigger = () => {
 
   const [selectedReasons, setSelectedReasons] = useState([]);
   const [additionalNotes, setAdditionalNotes] = useState('');
+  const [showConfirm, setShowConfirm] = useState(false);
   const navigation = useNavigation();
   const { getUser, user } = useUser();
   const [userInfo, setUserInfo] = useState(new User());
@@ -74,7 +76,7 @@ const submitEmergency = async () => {
       });
 
       console.log('Emergency document written with ID: ', docRef.id);
-      navigation.navigate('Menu');
+      setShowConfirm(true);
     } else {
       console.log('User not signed in or username not available.');
     }
@@ -117,6 +119,19 @@ const submitEmergency = async () => {
       <View style={styles.buttonGap}>
           <MenuButtons text="Cancel" bgColor={colors.white} bdColour={colors.primaryPink} />
       </View>
+      <Modal visible={showConfirm} transparent animationType='slide'>
+         <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              <Text style={styles.confirmText}>
+                Your details have been sent to the hospital..You will be contacted soon.
+              </Text>
+              <Pressable onPress={() => {setShowConfirm(false)
+                                          navigation.navigate('Menu')}}>
+                <Text style={styles.closeButton}>Ok</Text>
+              </Pressable>
+            </View>
+          </View> 
+         </Modal>
 
     </View>
     
@@ -154,5 +169,36 @@ const styles = StyleSheet.create({
       },
       buttonGap:{
         marginTop:16,
+      },
+      modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 1,
+        borderColor: colors.primaryPink,
+      },
+      modalContent: {
+        backgroundColor: 'white',
+        padding: 20,
+        borderRadius: 10,
+        elevation: 5,
+        alignItems: 'center',
+      },
+      congratsButton: {
+        fontFamily: typography.regular,
+        color: colors.primaryPink,
+        textDecorationLine: 'underline',
+        textAlign: 'center',
+      },
+      confirmText: {
+        fontFamily: typography.semiBold,
+        fontSize: typography.default,
+        color: colors.primaryPink,
+        textAlign: 'center',
+      },
+      closeButton: {
+        fontFamily: typography.semiBold,
+        fontSize: typography.default,
+        marginTop:20,
       }
 })
