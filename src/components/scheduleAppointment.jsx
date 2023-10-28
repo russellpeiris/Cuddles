@@ -17,7 +17,7 @@ export const ScheduleAppointment = () => {
         <ScrollView>
          <View style={styles.subConatainer}>
             <Image source={{ uri: selectedDoctor.imageUrl}} style={styles.image} />
-              <View>
+              <View style={{flexDirection: 'row', justifyContent: 'flex-start', marginTop: 4}}>
                 <Text style={styles.status}>Online</Text>
               </View>
               <View>
@@ -47,6 +47,9 @@ const styles = StyleSheet.create({
         height: '100%',
       },
       subConatainer:{
+        borderWidth: 1,
+        borderColor: colors.borderGray,
+        borderRadius: 10,
         margin: dimen.default,
         padding:dimen.default,
 
@@ -55,7 +58,6 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 200,
         borderRadius: 20,
-        marginTop: 20,
       },
       title: {
         fontSize: typography.subTitle,

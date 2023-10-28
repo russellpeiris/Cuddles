@@ -67,8 +67,8 @@ const Home = () => {
             <TouchableOpacity onPress={handleArticleCardPress}>
               <View style={{ paddingTop: 16 }}>
                 <ArticleCard
-                  title="Article Title"
-                  content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel libero nec nunc viverra posuere. Fusce euismod ex sit amet quam tincidunt, sed convallis eros varius. Proin euismod metus quis justo malesuada,Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel libero nec nunc viverra posuere. Fusce euismod ex sit amet quam tincidunt, sed convallis eros varius. Proin euismod metus quis justo malesuada,  "
+                  title={article[9].title}
+                  content={article[9].content}
                   imageUrl={'https://assets.babycenter.com/ims/2015/01/pregnancy-week-10-fingernails_4x3.jpg?width=722'}
                 />
               </View>

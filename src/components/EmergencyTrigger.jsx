@@ -116,18 +116,15 @@ const submitEmergency = async () => {
       <View>
        <PrimaryButton text="Inform Emergency" onPress={submitEmergency} />
       </View>
-      <View style={styles.buttonGap}>
-          <MenuButtons text="Cancel" bgColor={colors.white} bdColour={colors.primaryPink} />
-      </View>
       <Modal visible={showConfirm} transparent animationType='slide'>
          <View style={styles.modalContainer}>
             <View style={styles.modalContent}>
               <Text style={styles.confirmText}>
-                Your details have been sent to the hospital..You will be contacted soon.
+                Your details have been sent to the hospital. You will be contacted soon.
               </Text>
               <Pressable onPress={() => {setShowConfirm(false)
                                           navigation.navigate('Menu')}}>
-                <Text style={styles.closeButton}>Ok</Text>
+                <Text style={styles.closeButton}>Okay</Text>
               </Pressable>
             </View>
           </View> 
@@ -158,7 +155,6 @@ const styles = StyleSheet.create({
         fontSize: typography.default,
         fontFamily: typography.semiBold,
         paddingBottom: 8,
-        marginTop:10,
       },
       content: {
         fontSize: typography.small,
@@ -176,10 +172,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderWidth: 1,
         borderColor: colors.primaryPink,
+        padding: 16,
+        flexDirection: 'column',
+
       },
       modalContent: {
+        padding: 16,
         backgroundColor: 'white',
-        padding: 20,
         borderRadius: 10,
         elevation: 5,
         alignItems: 'center',
@@ -193,12 +192,16 @@ const styles = StyleSheet.create({
       confirmText: {
         fontFamily: typography.semiBold,
         fontSize: typography.default,
-        color: colors.primaryPink,
+        color:'black',
         textAlign: 'center',
       },
       closeButton: {
         fontFamily: typography.semiBold,
         fontSize: typography.default,
         marginTop:20,
+        backgroundColor: colors.primaryPink,
+        color: 'white',
+        padding: 10,
+        borderRadius: 10,
       }
 })
