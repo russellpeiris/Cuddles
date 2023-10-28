@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
         borderColor: colors.borderGray,
         borderRadius: 10,
         padding: 16,
-        height: '100%',
+        // height: '100%',
       },
       title:{
         fontSize: typography.default,
