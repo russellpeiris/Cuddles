@@ -1,4 +1,4 @@
-# Custom License with Attribution and Non-Commercial Clause
+# Custom License with Attribution, Non-Commercial, and Educational Use Clause
 
 Copyright (c) 2024 Russell Peiris, Umaira Marikkar, Sithija Santhiya
 
@@ -10,5 +10,8 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 2. **Non-Commercial Use Only**:  
    The Software may not be used, distributed, or sublicensed for any commercial purpose without the prior, explicit permission of the original authors. Commercial use includes, but is not limited to, selling, licensing, renting, or otherwise profiting from the Software or any derivative works based on the Software.
 
-3. **No Warranty**:  
+3. **Educational Use Only**:  
+   The Software is licensed strictly for **educational purposes only**. This includes use in academic environments, research, and learning scenarios. Any use beyond this scope, including but not limited to commercial, industrial, or for-profit activities, is prohibited without express written permission from the original authors.
+
+4. **No Warranty**:  
    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
